@@ -41,7 +41,7 @@ const urls = [
         allData = [...allData, ...tableData];
       } catch (error) {
         console.error(`Erro ao processar URL ${url}:`, error);
-        continue; // Ignore this URL and move to the next one
+        continue;
       }
     }
 
