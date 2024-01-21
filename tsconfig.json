@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2022",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
@@ -9,5 +9,5 @@
     "outDir": "dist"
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "*.spec.ts", "*.test.ts"]
+  "exclude": ["node_modules"]
 }
