@@ -1,6 +1,13 @@
-const puppeteer = require("puppeteer");
-const fs = require("fs-extra");
-const path = require("path");
+import puppeteer from "puppeteer";
+import fs from "fs-extra";
+import path from "path";
+
+interface GameList {
+  name: string;
+  href: string | null;
+  lastModified: string;
+  size: string;
+}
 
 const urls = [
   "https://archive.org/download/PS2CollectionPart1ByGhostware/",
@@ -11,40 +18,40 @@ const urls = [
   "https://archive.org/download/rr-sony-playstation-2-u3/usa/iso/",
 ];
 
-async function main() {
-  let browser;
+async function main(): Promise<void> {
+  let browser: puppeteer.Browser | undefined;
   try {
     browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let allData = [];
+    let allData: GameList[] = [];
 
     for (let url of urls) {
       try {
         await page.goto(url);
         await page.waitForSelector(".directory-listing-table");
 
-        const tableData = await page.$$eval(
+        const tableData: GameList[] = await page.$$eval(
           ".directory-listing-table tbody tr",
-          (rows) =>
+          (rows: HTMLTableRowElement[]) =>
             rows
               .map((row) => {
                 const cell = Array.from(row.cells);
-                const linkElement = cell[0].querySelector("a");
+                const linkElement = cell[0];
                 return {
                   name: linkElement.innerText,
-                  href: linkElement.getAttribute("href")
-                    ? linkElement.getAttribute("href")
-                    : null,
-                  lastModified: cell[1].innerText,
-                  size: cell[2].innerText,
+                  href: linkElement.getAttribute("href"),
+                  lastModified: cell[1],
+                  size: cell[2],
                 };
               })
               .slice(1)
         );
-        const updateTableData = tableData.map((gamesList) => {
+
+        const updateTableData = tableData.map((gamesList: GameList) => {
           if (gamesList.href !== null) gamesList.href = url + gamesList.href;
           return gamesList;
         });
+
         allData = [...allData, ...updateTableData];
       } catch (error) {
         console.error(`Erro ao processar URL ${url}:`, error);
@@ -56,7 +63,7 @@ async function main() {
     if (!fs.existsSync(cacheFolder)) fs.mkdir(cacheFolder);
     const outputFilePath = path.join(cacheFolder, "game-list.json");
 
-    let existingData = [];
+    let existingData: GameList[] = [];
     if (fs.existsSync(outputFilePath)) {
       existingData = await fs.readJson(outputFilePath);
     }
@@ -72,4 +79,4 @@ async function main() {
   }
 }
 
-module.exports = main;
+export default main;
