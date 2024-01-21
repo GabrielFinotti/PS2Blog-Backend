@@ -52,7 +52,7 @@ async function main() {
       }
     }
 
-    const cacheFolder = path.resolve(__dirname, "../cache");
+    const cacheFolder = path.resolve(__dirname, "../../cache");
     if (!fs.existsSync(cacheFolder)) fs.mkdir(cacheFolder);
     const outputFilePath = path.join(cacheFolder, "game-list.json");
 
