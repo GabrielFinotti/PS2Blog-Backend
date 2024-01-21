@@ -11,7 +11,7 @@ const urls = [
   "https://archive.org/download/rr-sony-playstation-2-u3/usa/iso/",
 ];
 
-(async () => {
+async function main() {
   let browser;
   try {
     browser = await puppeteer.launch();
@@ -54,7 +54,7 @@ const urls = [
 
     const cacheFolder = path.resolve(__dirname, "../../cache");
     if (!fs.existsSync(cacheFolder)) fs.mkdir(cacheFolder);
-    const outputFilePath = path.join(cacheFolder, "gameList.json");
+    const outputFilePath = path.join(cacheFolder, "game-list.json");
 
     let existingData = [];
     if (fs.existsSync(outputFilePath)) {
@@ -70,4 +70,6 @@ const urls = [
       await browser.close();
     }
   }
-})();
+}
+
+module.exports = main;
