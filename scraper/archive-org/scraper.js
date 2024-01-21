@@ -38,7 +38,11 @@ const urls = [
               })
               .slice(1)
         );
-        allData = [...allData, ...tableData];
+        const updateTableData = tableData.map((gamesList) => {
+          if (gamesList.href !== null) gamesList.href = url + gamesList.href;
+          return gamesList;
+        });
+        allData = [...allData, ...updateTableData];
       } catch (error) {
         console.error(`Erro ao processar URL ${url}:`, error);
         continue;
@@ -53,22 +57,9 @@ const urls = [
     if (fs.existsSync(outputFilePath)) {
       existingData = await fs.readJson(outputFilePath);
     }
+    existingData = [...existingData, ...allData];
 
-    const combinedData = [...existingData, ...allData];
-
-    let uniqueMap = {};
-
-    for (let data of combinedData) {
-      let dataString = JSON.stringify(data);
-
-      if (!uniqueMap[dataString]) {
-        uniqueMap[dataString] = true;
-      }
-    }
-
-    let uniqueData = Object.keys(uniqueMap).map((key) => JSON.parse(key));
-
-    await fs.writeJson(outputFilePath, uniqueData, { spaces: 2 });
+    await fs.writeJson(outputFilePath, existingData, { spaces: 2 });
   } catch (error) {
     console.error("Erro geral:", error);
   } finally {
