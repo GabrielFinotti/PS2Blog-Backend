@@ -4,18 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsx src/server.ts",
+    "start": "tsx src/scraper/scraper.ts",
     "dev": "tsx watch src/server.ts",
-    "build": "tsup src",
-    "test": "vitest"
+    "test": "vitest",
+    "build": "tsup src"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node-cron": "^3.0.11",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
     "vitest": "^1.2.1"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "node-cron": "^3.0.3",
+    "puppeteer": "^21.7.0"
   }
 }
