@@ -34,7 +34,7 @@ registerControler.post("/", async (req: Request, res: Response) => {
   }
 });
 
-// Vazendo as verificações dos dados
+// Fazendo as verificações dos dados
 function readData(datas: UserData) {
   if (datas.username === "" || datas.password === "" || datas.email === "") {
     return "Preenche todos os campos!";
