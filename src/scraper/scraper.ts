@@ -44,7 +44,7 @@ export async function main() {
         continue;
       }
     }
-    setData(allData);
+    setData(allData)
   } catch (err) {
     console.log(`Erro geral: ${err}`);
   } finally {
@@ -74,4 +74,3 @@ function setData(data: GameList[]) {
 
   fs.writeJson(outputFilePath, existingData, { spaces: 2 });
 }
-
