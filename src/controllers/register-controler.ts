@@ -1,42 +1,60 @@
 import express, { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import userModel from "../models/user-model";
+import { UserData } from "../interfaces/user-data";
 
 const registerControler = express.Router();
 
 registerControler.post("/", async (req: Request, res: Response) => {
   try {
-    if (
-      req.body.username.trim() === "" ||
-      req.body.email.trim() === "" ||
-      req.body.password.trim() === ""
-    ) {
-      return res.status(400).send("Preencha todos os campos.");
+    // Recebendo os dados ja verificados
+    const data = readData(req.body);
+    
+    // Se o retorno não for um objeto, retorna um erro ao usuário
+    if (typeof data === "string") {
+      return res.status(400).json({ message: data });
     }
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(req.body.email)) {
-      return res.status(400).send("E-mail inválido.");
+
+    // Verificando se o email enviado ja existe
+    const existingEmail = await userModel.findOne({ email: data.email });
+    if (existingEmail) {
+      return res.status(400).json({ message: "Este email ja existe!" });
     }
-    if (req.body.username.length < 4 || req.body.username.length > 16) {
-      return res
-        .status(400)
-        .send("O nome de usuário deve ter entre 4 e 16 caracteres.");
-    }
-    if (req.body.password.length < 6 || req.body.password.length > 20) {
-      return res.status(400).send("A senha deve ter entre 6 e 20 caracteres.");
-    }
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    // Criando um novo usuário
     const user = new userModel({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPassword,
+      username: data.username.trim(),
+      email: data.email.toLowerCase().trim(),
+      password: data.password.trim(),
     });
     await user.save();
-    res.status(201).send("Usuário criado com sucesso!");
+    res.status(200).json({ message: "Save criado com sucesso!" });
   } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
+    res.status(500).json({ message: `Erro interno do servidor: ${err}` });
   }
 });
+
+// Vazendo as verificações dos dados
+function readData(datas: UserData) {
+  if (datas.username === "" || datas.password === "" || datas.email === "") {
+    return "Preenche todos os campos!";
+  }
+  if (datas.username.length < 4 || datas.username.length > 16) {
+    return "O nome de usuário tem que ter entre 4 e 16 caracteres!";
+  }
+  if(datas.username != datas.username.trim() || datas.password != datas.password.trim()) {
+    return 'Os dados não podem começar com espaçamentos'
+  }
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!emailRegex.test(datas.email)) {
+    return "Insira um email válido!";
+  }
+  if (datas.password.length < 6 || datas.password.length > 20) {
+    return "A senha tem que ter entre 6 e 20 caracteres!";
+  }
+  const verifyData = datas;
+
+  return verifyData;
+}
 
 export default registerControler;
