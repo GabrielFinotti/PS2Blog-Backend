@@ -13,7 +13,7 @@ registerControler.post("/", async (req: Request, res: Response) => {
     ) {
       return res.status(400).send("Preencha todos os campos.");
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(req.body.email)) {
       return res.status(400).send("E-mail inválido.");
     }
@@ -34,7 +34,7 @@ registerControler.post("/", async (req: Request, res: Response) => {
     await user.save();
     res.status(201).send("Usuário criado com sucesso!");
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).send(err);
   }
 });
