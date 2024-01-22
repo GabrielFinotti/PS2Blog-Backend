@@ -20,7 +20,7 @@ registerControler.post("/", async (req: Request, res: Response) => {
     if (existingEmail) {
       return res.status(400).json({ message: "Este email ja existe!" });
     }
-    const hashPassword = await bcrypt.hash(data.password, 10)
+    const hashPassword = await bcrypt.hash(data.password, 10);
     // Criando um novo usuário
     const user = new userModel({
       username: data.username.trim(),
