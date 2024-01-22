@@ -32,23 +32,29 @@ updateControler.put("/:id", async (req: Request, res: Response) => {
 
 async function readData(datas: UserData) {
   if (datas.username === "" || datas.password === "" || datas.email === "") {
-    return "Preenche todos os campos!";
+    return "Preencha todos os campos!";
   }
   if (
-    datas.username != datas.username.trim() ||
-    datas.password != datas.password.trim()
+    (datas.username && datas.username != datas.username.trim()) ||
+    (datas.password && datas.password != datas.password.trim())
   ) {
     return "Os dados não podem começar com espaçamentos";
   }
-  if (datas.username.length < 4 || datas.username.length > 16) {
-    return "O nome de usuário tem que ter entre 4 e 16 caracteres!";
+  if (datas.username) {
+    if (datas.username.length < 4 || datas.username.length > 16) {
+      return "O nome de usuário tem que ter entre 4 e 16 caracteres!";
+    }
   }
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!emailRegex.test(datas.email)) {
-    return "Insira um email válido!";
+  if (datas.password) {
+    if (datas.password.length < 6 || datas.password.length > 20) {
+      return "A senha tem que ter entre 6 e 20 caracteres!";
+    }
   }
-  if (datas.password.length < 6 || datas.password.length > 20) {
-    return "A senha tem que ter entre 6 e 20 caracteres!";
+  if (datas.email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(datas.email)) {
+      return "Insira um email válido!";
+    }
   }
   const verifyData = datas;
 
