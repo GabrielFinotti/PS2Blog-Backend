@@ -7,35 +7,28 @@ const registerControler = express.Router();
 
 registerControler.post("/", async (req: Request, res: Response) => {
   try {
-    // Recebendo os dados ja verificados
-    const data = readData(req.body);
-
-    // Se o retorno não for um objeto, retorna um erro ao usuário
+    const data = await readData(req.body);
     if (typeof data === "string") {
       return res.status(400).json({ message: data });
     }
-
-    // Verificando se o email enviado ja existe
     const existingEmail = await userModel.findOne({ email: data.email });
     if (existingEmail) {
-      return res.status(400).json({ message: "Este email ja existe!" });
+      return res.status(409).json({ message: "Este email ja existe!" });
     }
     const hashPassword = await bcrypt.hash(data.password, 10);
-    // Criando um novo usuário
     const user = new userModel({
-      username: data.username.trim(),
-      email: data.email.toLowerCase().trim(),
-      password: hashPassword.trim(),
+      username: data.username,
+      email: data.email.toLowerCase(),
+      password: hashPassword,
     });
     await user.save();
-    res.status(200).json({ message: "Save criado com sucesso!" });
+    res.status(201).json({ message: "Save criado com sucesso!" });
   } catch (err) {
     res.status(500).json({ message: `Erro interno do servidor: ${err}` });
   }
 });
 
-// Fazendo as verificações dos dados
-function readData(datas: UserData) {
+async function readData(datas: UserData) {
   if (datas.username === "" || datas.password === "" || datas.email === "") {
     return "Preenche todos os campos!";
   }
