@@ -1,8 +1,6 @@
-# Node
+# Foulders
 node_modules
-# Certificate
-cert
-# Caches
-cache
-# Builds
+db
 dist
+cache
+cert
