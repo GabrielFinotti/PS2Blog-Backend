@@ -9,7 +9,7 @@ registerControler.post("/", async (req: Request, res: Response) => {
   try {
     // Recebendo os dados ja verificados
     const data = readData(req.body);
-    
+
     // Se o retorno não for um objeto, retorna um erro ao usuário
     if (typeof data === "string") {
       return res.status(400).json({ message: data });
@@ -20,12 +20,12 @@ registerControler.post("/", async (req: Request, res: Response) => {
     if (existingEmail) {
       return res.status(400).json({ message: "Este email ja existe!" });
     }
-
+    const hashPassword = await bcrypt.hash(data.password, 10)
     // Criando um novo usuário
     const user = new userModel({
       username: data.username.trim(),
       email: data.email.toLowerCase().trim(),
-      password: data.password.trim(),
+      password: hashPassword.trim(),
     });
     await user.save();
     res.status(200).json({ message: "Save criado com sucesso!" });
@@ -39,11 +39,14 @@ function readData(datas: UserData) {
   if (datas.username === "" || datas.password === "" || datas.email === "") {
     return "Preenche todos os campos!";
   }
+  if (
+    datas.username != datas.username.trim() ||
+    datas.password != datas.password.trim()
+  ) {
+    return "Os dados não podem começar com espaçamentos";
+  }
   if (datas.username.length < 4 || datas.username.length > 16) {
     return "O nome de usuário tem que ter entre 4 e 16 caracteres!";
-  }
-  if(datas.username != datas.username.trim() || datas.password != datas.password.trim()) {
-    return 'Os dados não podem começar com espaçamentos'
   }
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!emailRegex.test(datas.email)) {
