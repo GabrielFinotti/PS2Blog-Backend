@@ -45,6 +45,7 @@ export async function main() {
       }
     }
     setData(allData);
+    console.log("Scraping efetuado com sucesso!");
   } catch (err) {
     console.log(`Erro geral: ${err}`);
   } finally {
@@ -52,7 +53,7 @@ export async function main() {
       await browser.close();
     }
   }
-};
+}
 
 function editLinkData(value: GameList[], url: string) {
   const data = value.map((gameList) => {
@@ -74,4 +75,3 @@ function setData(data: GameList[]) {
 
   fs.writeJson(outputFilePath, existingData, { spaces: 2 });
 }
-
