@@ -1,7 +1,7 @@
 // Importações
 import express from "express";
 import connect from "../db/connect";
-import routes from "./routes/userRouter";
+import userRouter from "./routes/userRouter";
 import scrapingCron from "./job/scraping-cron";
 
 const app = express();
@@ -11,7 +11,7 @@ scrapingCron.start();
 
 connect;
 
-app.use("/", routes);
+app.use("/", userRouter);
 
 app.listen(3000, () => {
   console.log("Servidor iniciado na porta 3000!");

@@ -42,11 +42,21 @@ export const updateData = async (
   id: mongoose.Types.ObjectId
 ): Promise<void> => {
   let updateData: Partial<UserData> = {};
+  const existingUser = await userModel.findById(id);
+  const existingPassword = await userModel.findById(id, { password: true });
+  let comparePassword;
 
-  if (userData.username) updateData.username = userData.username;
-  if (userData.email) updateData.email = userData.email.toLowerCase();
+  if (existingPassword)
+    comparePassword = await bcrypt.compare(
+      userData.password,
+      existingPassword.password
+    );
+  if (userData.username && userData.username != existingUser?.username)
+    updateData.username = userData.username;
+  if (userData.email && userData.email != existingUser?.email)
+    updateData.email = userData.email.toLowerCase();
 
-  if (userData.password) {
+  if (userData.password && !comparePassword) {
     const newPassword = await bcrypt.hash(userData.password, 10);
     updateData.password = newPassword;
   }
