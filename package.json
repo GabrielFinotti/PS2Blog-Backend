@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "scraper": "tsx src/scraper/scraper.ts",
+    "sc": "tsx src/job/scraper.ts",
     "dev": "tsx watch src/server.ts",
     "test": "vitest",
     "build": "tsup src"
