@@ -21,4 +21,4 @@ const gameListSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("gameList", gameListSchema);
+export default mongoose.model("game list", gameListSchema);
