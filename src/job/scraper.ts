@@ -1,9 +1,10 @@
-import { GameList } from "../interfaces/game-list";
 import puppeteer from "puppeteer";
 import fs from "fs-extra";
 import path from "path";
+import { GameList } from "../interfaces/gameList";
+import gameList from "../models/gameList";
 
-const urls: Array<string> = [
+const gameArchiveUrls: Array<string> = [
   "https://archive.org/download/PS2CollectionPart1ByGhostware/",
   "https://archive.org/download/PS2CollectionPart2ByGhostware/",
   "https://archive.org/download/TextsPS2CollectionPart3ByGhostware/",
@@ -21,7 +22,7 @@ export async function main() {
     browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    for (let url of urls) {
+    for (let url of gameArchiveUrls) {
       try {
         await page.goto(url);
         await page.waitForSelector(".directory-listing-table");
@@ -33,7 +34,7 @@ export async function main() {
               .map((row) => {
                 const columns = [...row.cells];
                 return {
-                  name: columns[0].querySelector("a")?.innerText,
+                  gameName: columns[0].querySelector("a")?.innerText,
                   href: columns[0].querySelector("a")?.getAttribute("href"),
                   size: columns[2].innerText,
                 };
@@ -43,16 +44,13 @@ export async function main() {
 
         allData = [...allData, ...editLinkData(tableData, url)];
       } catch (err) {
-        console.error(`Erro ao processar Url ${url}. Error: ${err}`);
         writeErrorToLog(err);
         continue;
       }
     }
 
-    setData(allData);
-    console.log("Scraping efetuado com sucesso!");
+    await saveDataToDatabase(allData);
   } catch (err) {
-    console.log(`Erro geral: ${err}`);
     writeErrorToLog(err);
   } finally {
     if (browser) {
@@ -72,6 +70,16 @@ function editLinkData(value: GameList[], url: string) {
   return data;
 }
 
+async function saveDataToDatabase(data: GameList[]) {
+  try {
+    await gameList.deleteMany();
+    await gameList.insertMany(data);
+    console.log("Games salvos no banco!");
+  } catch (err) {
+    writeErrorToLog(err);
+  }
+}
+
 function writeErrorToLog(error: unknown) {
   const logFolder = path.resolve(__dirname, "./logs");
 
@@ -84,16 +92,4 @@ function writeErrorToLog(error: unknown) {
   const errorLog = `\n[${currentDate}] - Erro: ${error}\n`;
 
   fs.appendFileSync(logFilePath, errorLog);
-}
-
-function setData(data: GameList[]) {
-  const cacheFolder = path.resolve(__dirname, "../../cache");
-
-  if (!fs.existsSync(cacheFolder)) {
-    fs.mkdirSync(cacheFolder);
-  }
-
-  const outputFilePath = path.join(cacheFolder, "game-list.json");
-
-  fs.writeJsonSync(outputFilePath, data, { spaces: 2 });
 }

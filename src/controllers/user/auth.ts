@@ -1,19 +1,22 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import userModel from "../../models/user-model";
-import { UserData } from "../../interfaces/user-data";
+import userModel from "../../models/user";
+import { UserData } from "../../interfaces/userData";
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password }: UserData = req.body;
-    const user = await userModel.findOne({ email }, { password: true });
-
+    const userData: UserData = req.body;
+    const user = await userModel.findOne(
+      { email: userData.email },
+      { password: true }
+    );
+    
     if (!user) {
       return res.status(404).json({ message: "Usuário não encontrado!" });
     }
 
     const validPassword: boolean = await bcrypt.compare(
-      password,
+      userData.password,
       user.password
     );
 

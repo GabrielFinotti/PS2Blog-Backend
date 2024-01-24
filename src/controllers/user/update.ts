@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import userModel from "../../models/user-model";
+import userModel from "../../models/user";
 import { updateData, validateUserData } from "../../utils/userValidation";
 
 export const update = async (req: Request, res: Response) => {
@@ -20,13 +20,18 @@ export const update = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Usuário não encontrado!" });
     }
 
-    const data = await validateUserData(req.body);
+    const userData = await validateUserData(req.body);
 
-    if (typeof data === "string") {
-      return res.status(400).json({ message: data });
+    if (typeof userData === "string") {
+      return res.status(400).json({ message: userData });
     }
 
-    await updateData(data, userId);
+    const endResponse = await updateData(userData, userId);
+
+    if (typeof endResponse === "string") {
+      return res.status(409).json({ message: endResponse });
+    }
+    
     res.status(200).json({ message: "Save atualizado com sucesso!" });
   } catch (err) {
     res.status(500).json({ message: `Erro interno no servidor: ${err}` });

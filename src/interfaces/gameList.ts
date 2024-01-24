@@ -1,5 +1,5 @@
 export interface GameList {
-  name: string | undefined;
+  gameName: string | undefined;
   href: string | null | undefined;
   size: string;
 }

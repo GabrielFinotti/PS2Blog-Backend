@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import userModel from "../models/user-model";
-import { UserData } from "../interfaces/user-data";
+import userModel from "../models/user";
+import { UserData } from "../interfaces/userData";
 
 export const validateUserData = async (
   userData: UserData
@@ -40,19 +40,21 @@ export const validateUserData = async (
 export const updateData = async (
   userData: UserData,
   id: mongoose.Types.ObjectId
-): Promise<void> => {
+): Promise<void | string> => {
   let updateData: Partial<UserData> = {};
   const existingUser = await userModel.findById(id);
   const existingPassword = await userModel.findById(id, { password: true });
-  let comparePassword;
+  let comparePassword: boolean | undefined;
 
   if (existingPassword)
     comparePassword = await bcrypt.compare(
       userData.password,
       existingPassword.password
     );
+
   if (userData.username && userData.username != existingUser?.username)
     updateData.username = userData.username;
+
   if (userData.email && userData.email != existingUser?.email)
     updateData.email = userData.email.toLowerCase();
 
@@ -61,5 +63,9 @@ export const updateData = async (
     updateData.password = newPassword;
   }
 
-  await userModel.findByIdAndUpdate(id, { $set: updateData });
+  if (Object.keys(updateData).length > 0) {
+    await userModel.findByIdAndUpdate(id, { $set: updateData });
+  } else {
+    return "Dados ja existentes!";
+  }
 };
