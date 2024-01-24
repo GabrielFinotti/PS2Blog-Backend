@@ -31,6 +31,7 @@ export const update = async (req: Request, res: Response) => {
     if (typeof endResponse === "string") {
       return res.status(409).json({ message: endResponse });
     }
+    
     res.status(200).json({ message: "Save atualizado com sucesso!" });
   } catch (err) {
     res.status(500).json({ message: `Erro interno no servidor: ${err}` });

@@ -70,6 +70,16 @@ function editLinkData(value: GameList[], url: string) {
   return data;
 }
 
+async function saveDataToDatabase(data: GameList[]) {
+  try {
+    await gameList.deleteMany();
+    await gameList.insertMany(data);
+    console.log("Games salvos no banco!");
+  } catch (err) {
+    writeErrorToLog(err);
+  }
+}
+
 function writeErrorToLog(error: unknown) {
   const logFolder = path.resolve(__dirname, "./logs");
 
@@ -82,14 +92,4 @@ function writeErrorToLog(error: unknown) {
   const errorLog = `\n[${currentDate}] - Erro: ${error}\n`;
 
   fs.appendFileSync(logFilePath, errorLog);
-}
-
-async function saveDataToDatabase(data: GameList[]) {
-  try {
-    await gameList.deleteMany();
-    await gameList.insertMany(data);
-    console.log("Games salvos no banco!");
-  } catch (err) {
-    writeErrorToLog(err);
-  }
 }

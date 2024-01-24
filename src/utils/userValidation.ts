@@ -54,8 +54,10 @@ export const updateData = async (
 
   if (userData.username && userData.username != existingUser?.username)
     updateData.username = userData.username;
+
   if (userData.email && userData.email != existingUser?.email)
     updateData.email = userData.email.toLowerCase();
+
   if (userData.password && !comparePassword) {
     const newPassword = await bcrypt.hash(userData.password, 10);
     updateData.password = newPassword;
@@ -64,6 +66,6 @@ export const updateData = async (
   if (Object.keys(updateData).length > 0) {
     await userModel.findByIdAndUpdate(id, { $set: updateData });
   } else {
-    return "Dados ja existentes";
+    return "Dados ja existentes!";
   }
 };
