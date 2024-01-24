@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const gameListSchema: mongoose.Schema = new mongoose.Schema(
+const gameListSchema = new mongoose.Schema(
   {
     gameName: {
       type: String,
