@@ -4,7 +4,7 @@ import path from "path";
 import { GameList } from "../interfaces/gameList";
 import gameList from "../models/gameList";
 
-const urls: Array<string> = [
+const gameArchiveUrls: Array<string> = [
   "https://archive.org/download/PS2CollectionPart1ByGhostware/",
   "https://archive.org/download/PS2CollectionPart2ByGhostware/",
   "https://archive.org/download/TextsPS2CollectionPart3ByGhostware/",
@@ -22,7 +22,7 @@ export async function main() {
     browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    for (let url of urls) {
+    for (let url of gameArchiveUrls) {
       try {
         await page.goto(url);
         await page.waitForSelector(".directory-listing-table");
@@ -49,7 +49,7 @@ export async function main() {
       }
     }
 
-    await setData(allData);
+    await saveDataToDatabase(allData);
   } catch (err) {
     writeErrorToLog(err);
   } finally {
@@ -84,7 +84,7 @@ function writeErrorToLog(error: unknown) {
   fs.appendFileSync(logFilePath, errorLog);
 }
 
-async function setData(data: GameList[]) {
+async function saveDataToDatabase(data: GameList[]) {
   try {
     await gameList.deleteMany();
     await gameList.insertMany(data);
