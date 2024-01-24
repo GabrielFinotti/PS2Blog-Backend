@@ -2,7 +2,7 @@
 import express from "express";
 import connect from "../db/connect";
 import userRouter from "./routes/userRouter";
-import scrapingCron from "./job/scraping-cron";
+import scrapingCron from "./job/scrapingCron";
 
 const app = express();
 app.use(express.json());

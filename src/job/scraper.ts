@@ -1,4 +1,4 @@
-import { GameList } from "../interfaces/game-list";
+import { GameList } from "../interfaces/gameList";
 import puppeteer from "puppeteer";
 import fs from "fs-extra";
 import path from "path";

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import userModel from "../../models/user-model";
-import { UserData } from "../../interfaces/user-data";
+import userModel from "../../models/user";
+import { UserData } from "../../interfaces/userData";
 
 export const login = async (req: Request, res: Response) => {
   try {
