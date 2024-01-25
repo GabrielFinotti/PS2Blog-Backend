@@ -25,7 +25,7 @@ async function gameFilter(page: number, gameName: string) {
     gameName: { $regex: gameName, $options: "i" },
   });
 
-  const totalPages = Math.ceil(totalDocs / 20);
+  const totalPages = Math.ceil(totalDocs / 10);
 
   const games = await gameListModel
     .find(
@@ -34,8 +34,8 @@ async function gameFilter(page: number, gameName: string) {
       },
       { createdAt: false, updatedAt: false, _id: false, __v: false }
     )
-    .skip((page - 1) * 20)
-    .limit(20);
+    .skip((page - 1) * 10)
+    .limit(10);
 
   let nextPage;
   let prevPage;
