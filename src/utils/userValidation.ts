@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import userModel from "../models/user";
-import { UserData } from "../interfaces/userData";
+import userModel from "../models/userModels";
+import { UserData } from "../interfaces/userDataInterface";
 
 export const validateUserData = async (
   userData: UserData
