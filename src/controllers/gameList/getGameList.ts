@@ -26,6 +26,7 @@ async function gameFilter(page: number, gameName: string) {
   });
 
   const docLimit: number = 10;
+
   const totalPages = Math.ceil(totalDocs / docLimit);
 
   const games = await gameListModel
