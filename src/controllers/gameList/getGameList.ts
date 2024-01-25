@@ -35,7 +35,7 @@ async function gameFilter(page: number, gameName: string) {
       { createdAt: false, updatedAt: false, _id: false, __v: false }
     )
     .skip((page - 1) * 20)
-    .limit(20).lean();
+    .limit(20);
 
   let nextPage;
   let prevPage;
