@@ -24,10 +24,7 @@ export async function main() {
 
     for (let url of gameArchiveUrls) {
       try {
-        await page.goto(url);
-        await page.waitForSelector(".directory-listing-table");
-
-        const tableData: GameList[] = await getColumnsData(page);
+        const tableData: GameList[] = await getColumnsData(page, url);
 
         allData = [...allData, ...(await editLinkData(tableData, url))];
       } catch (err) {
@@ -46,7 +43,10 @@ export async function main() {
   }
 }
 
-async function getColumnsData(page: Page) {
+async function getColumnsData(page: Page, url: string) {
+  await page.goto(url);
+  await page.waitForSelector(".directory-listing-table");
+
   return page.$$eval(".directory-listing-table tbody tr", (rows) =>
     rows
       .map((row) => {
