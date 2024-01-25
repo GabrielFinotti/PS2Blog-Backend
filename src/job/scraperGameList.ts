@@ -1,8 +1,8 @@
 import puppeteer, { Page } from "puppeteer";
 import fs from "fs-extra";
 import path from "path";
-import { GameList } from "../interfaces/gameList";
-import gameList from "../models/gameList";
+import { GameList } from "../interfaces/gameListinterface";
+import gameList from "../models/gameListModels";
 
 const gameArchiveUrls: Array<string> = [
   "https://archive.org/download/PS2CollectionPart1ByGhostware/",

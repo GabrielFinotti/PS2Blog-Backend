@@ -1,5 +1,5 @@
-import { gameListRouter } from "./gameList/gameList";
-import { userRouter } from "./user/user";
+import { gameListRouter } from "./gameList/gameListRouter";
+import { userRouter } from "./user/userRouter";
 
 export const router = {
   gameListRouter,

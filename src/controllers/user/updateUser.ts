@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import userModel from "../../models/user";
+import userModel from "../../models/userModels";
 import { updateData, validateUserData } from "../../utils/userValidation";
 
 export const update = async (req: Request, res: Response) => {

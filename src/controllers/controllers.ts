@@ -1,7 +1,7 @@
-import { allGames } from "./gameList/list";
-import { login } from "./user/auth";
-import { register } from "./user/register";
-import { update } from "./user/update";
+import { allGames } from "./gameList/getGameList";
+import { login } from "./user/authUser";
+import { register } from "./user/registerUser";
+import { update } from "./user/updateUser";
 
 export const controller = {
   login,
