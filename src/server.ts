@@ -1,7 +1,7 @@
 // Importações
 import express from "express";
 import connect from "../db/connect";
-import scrapingCron from "./job/scrapingCron";
+import { scrapingCron } from "./job/scrapingCron";
 import { router } from "./routes/routers";
 
 const app = express();

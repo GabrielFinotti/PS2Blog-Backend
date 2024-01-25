@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer, { Page } from "puppeteer";
 import fs from "fs-extra";
 import path from "path";
 import { GameList } from "../interfaces/gameList";
@@ -27,31 +27,18 @@ export async function main() {
         await page.goto(url);
         await page.waitForSelector(".directory-listing-table");
 
-        const tableData: GameList[] = await page.$$eval(
-          ".directory-listing-table tbody tr",
-          (rows) =>
-            rows
-              .map((row) => {
-                const columns = [...row.cells];
-                return {
-                  gameName: columns[0].querySelector("a")?.innerText,
-                  href: columns[0].querySelector("a")?.getAttribute("href"),
-                  size: columns[2].innerText,
-                };
-              })
-              .slice(1)
-        );
+        const tableData: GameList[] = await getColumnsData(page);
 
-        allData = [...allData, ...editLinkData(tableData, url)];
+        allData = [...allData, ...(await editLinkData(tableData, url))];
       } catch (err) {
-        writeErrorToLog(err);
+        await writeErrorToLog(err);
         continue;
       }
     }
 
     await saveDataToDatabase(allData);
   } catch (err) {
-    writeErrorToLog(err);
+    await writeErrorToLog(err);
   } finally {
     if (browser) {
       await browser.close();
@@ -59,7 +46,22 @@ export async function main() {
   }
 }
 
-function editLinkData(value: GameList[], url: string) {
+async function getColumnsData(page: Page) {
+  return page.$$eval(".directory-listing-table tbody tr", (rows) =>
+    rows
+      .map((row) => {
+        const columns = [...row.cells];
+        return {
+          gameName: columns[0].querySelector("a")?.innerText,
+          href: columns[0].querySelector("a")?.getAttribute("href"),
+          size: columns[2].innerText,
+        };
+      })
+      .slice(1)
+  );
+}
+
+async function editLinkData(value: GameList[], url: string) {
   const data = value.map((gameList) => {
     if (gameList.href !== null && gameList.href !== undefined) {
       gameList.href = url + gameList.href;
@@ -80,7 +82,7 @@ async function saveDataToDatabase(data: GameList[]) {
   }
 }
 
-function writeErrorToLog(error: unknown) {
+async function writeErrorToLog(error: unknown) {
   const logFolder = path.resolve(__dirname, "./logs");
 
   if (!fs.existsSync(logFolder)) {

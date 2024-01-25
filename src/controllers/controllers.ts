@@ -1,4 +1,4 @@
-import { allGames } from "./gameList/all";
+import { allGames } from "./gameList/list";
 import { login } from "./user/auth";
 import { register } from "./user/register";
 import { update } from "./user/update";
