@@ -1,7 +1,7 @@
 import puppeteer, { Page } from "puppeteer";
 import fs from "fs-extra";
 import path from "path";
-import { GameList } from "../interfaces/gameListinterface";
+import { GameList } from "../interfaces/gameListInterface";
 import gameList from "../models/gameListModels";
 
 const gameArchiveUrls: Array<string> = [
