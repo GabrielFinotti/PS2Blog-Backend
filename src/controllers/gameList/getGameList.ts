@@ -13,7 +13,7 @@ export const allGames = async (req: Request, res: Response) => {
     }
 
     const gameList = await gameFilter(page, gameName);
-    
+
     res.status(200).json({ gameList });
   } catch (err) {
     res.status(500).json({ message: `Erro interno do servidor: ${err}` });
@@ -28,11 +28,14 @@ async function gameFilter(page: number, gameName: string) {
   const totalPages = Math.ceil(totalDocs / 20);
 
   const games = await gameListModel
-    .find({
-      gameName: { $regex: gameName, $options: "i" },
-    })
+    .find(
+      {
+        gameName: { $regex: gameName, $options: "i" },
+      },
+      { createdAt: false, updatedAt: false, _id: false, __v: false }
+    )
     .skip((page - 1) * 20)
-    .limit(20);
+    .limit(20).lean();
 
   let nextPage;
   let prevPage;
@@ -45,5 +48,5 @@ async function gameFilter(page: number, gameName: string) {
     nextPage = `?page=${page + 1}&name=${gameName}`;
   }
 
-  return { games, prevPage, nextPage, totalPages };
+  return { games, prevPage, nextPage, totalPages, totalDocs };
 }
