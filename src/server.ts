@@ -1,6 +1,6 @@
 // Importações
 import express from "express";
-import connect from "../db/connect";
+import { connect } from "../db/connect";
 import cors from "cors";
 import { scrapingCron } from "./job/scrapingCron";
 import { router } from "./routes/routers";
