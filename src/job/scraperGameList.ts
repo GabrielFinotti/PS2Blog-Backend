@@ -91,7 +91,7 @@ async function writeErrorToLog(error: unknown) {
 
   const logFilePath = path.join(logFolder, "error-log.txt");
   const currentDate = new Date().toLocaleString();
-  const errorLog = `\n[${currentDate}] - Erro: ${error}\n`;
+  const errorLog = `[${currentDate}] - Erro: ${error}\n`;
 
   fs.appendFileSync(logFilePath, errorLog);
 }
