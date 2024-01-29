@@ -1,4 +1,3 @@
-// Importações
 import express from "express";
 import { connect } from "../db/connect";
 import cors from "cors";
