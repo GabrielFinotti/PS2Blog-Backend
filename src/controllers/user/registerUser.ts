@@ -25,7 +25,7 @@ export const register = async (req: Request, res: Response) => {
     });
 
     await user.save();
-    
+
     res.status(201).json({ message: "Usuário criado com sucesso!" });
   } catch (err) {
     res.status(500).json({ message: `Erro interno do servidor: ${err}` });
