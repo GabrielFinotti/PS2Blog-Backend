@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sc": "tsx src/job/scraper.ts",
     "dev": "tsx watch src/server.ts",
     "test": "vitest",
     "build": "tsup src"
@@ -27,7 +26,6 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "fs-extra": "^11.2.0",

@@ -55,8 +55,15 @@ export const updateData = async (
   if (userData.username && userData.username != existingUser?.username)
     updateData.username = userData.username;
 
-  if (userData.email && userData.email != existingUser?.email)
-    updateData.email = userData.email.toLowerCase();
+  if (userData.email && userData.email != existingUser?.email) {
+    const existingEmail = await userModel.findOne({ email: userData.email });
+
+    if (existingEmail) {
+      return "Email ja cadastrado!";
+    } else {
+      updateData.email = userData.email;
+    }
+  }
 
   if (userData.password && !comparePassword) {
     const newPassword = await bcrypt.hash(userData.password, 10);
