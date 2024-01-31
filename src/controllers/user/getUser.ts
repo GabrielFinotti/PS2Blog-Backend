@@ -15,6 +15,7 @@ export const getUserData = async (req: Request, res: Response) => {
     const userId = new mongoose.Types.ObjectId(id);
     const user = await userModels.findById(userId, {
       username: true,
+      email: true,
       _id: false,
     });
 
