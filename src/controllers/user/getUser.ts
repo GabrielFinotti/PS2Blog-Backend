@@ -15,6 +15,7 @@ export const getUserData = async (req: Request, res: Response) => {
     const userId = new mongoose.Types.ObjectId(id);
     const user = await userModels.findById(userId, {
       username: true,
+      email: true,
       _id: false,
     });
 
@@ -24,6 +25,6 @@ export const getUserData = async (req: Request, res: Response) => {
 
     res.status(200).json({ user });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: `Erro interno do servidor: ${err}` });
   }
 };
