@@ -9,7 +9,10 @@ export const allGames = async (req: Request, res: Response) => {
     if (isNaN(page)) {
       return res
         .status(400)
-        .json({ message: "Os parâmetro de consultas devem ser números!" });
+        .json({
+          message:
+            "O parâmetro de consulta de página deve ser do tipo numérico!",
+        });
     }
 
     const gameList = await gameFilter(page, gameName);
