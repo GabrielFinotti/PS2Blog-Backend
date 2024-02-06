@@ -28,7 +28,7 @@ async function gameFilter(page: number, gameName: string) {
     gameName: { $regex: gameName, $options: "i" },
   });
 
-  const docLimit: number = 5;
+  const docLimit: number = 6;
   const totalPages = Math.ceil(totalDocs / docLimit);
 
   const games = await gameListModel
