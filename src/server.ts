@@ -3,7 +3,6 @@ import express from "express";
 import cors from "cors";
 import { scrapingCron } from "./job/scrapingCron";
 import { router } from "./routes/routers";
-import { main } from "./job/scraperGameList";
 
 const app = express();
 app.use(express.json());
@@ -14,8 +13,6 @@ app.use(
 );
 
 scrapingCron.start();
-
-main()
 
 railwayDb().then(() => {
   app.use("/", router.userRouter, router.gameListRouter);
