@@ -8,7 +8,7 @@ export const railwayDb = async function () {
   }
 
   try {
-    await mongoose.connect(`${mongoDB}/PS2-Blog`);
+    await mongoose.connect(`${mongoDB}`);
     console.log("Banco conectado!");
   } catch (err) {
     throw err;
