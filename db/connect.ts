@@ -6,5 +6,5 @@ export const connect = mongoose
     console.log("Conectado ao banco!");
   })
   .catch(() => {
-    "Não foi possível se conectar ao banco!";
+    console.log("Não foi possível se conectar ao banco!");
   });
