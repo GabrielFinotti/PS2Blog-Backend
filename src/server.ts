@@ -1,6 +1,6 @@
-import { railwayDb } from "./../db/railwayConnect";
 import express from "express";
 import cors from "cors";
+import { connect } from "./../db/connect";
 import { scrapingCron } from "./job/scrapingCron";
 import { router } from "./routes/routers";
 
@@ -14,10 +14,10 @@ app.use(
 
 scrapingCron.start();
 
-railwayDb().then(() => {
+connect().then(() => {
   app.use("/", router.userRouter, router.gameListRouter);
 
-  const port = process.env.PORT || 3000;
+  const port = 3000;
 
   app.listen(port, () => {
     console.log(`Servidor iniciado na porta ${port}`);
