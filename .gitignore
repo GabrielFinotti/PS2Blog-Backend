@@ -1,6 +1,5 @@
 # Foulders
 node_modules
-db
 dist
 cache
 cert
