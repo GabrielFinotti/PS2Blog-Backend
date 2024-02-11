@@ -1,18 +1,23 @@
 import { Request, Response } from "express";
 import gameListModel from "../../models/gameListModels";
+import userModels from "../../models/userModels";
 
 export const allGames = async (req: Request, res: Response) => {
   try {
     const page = req.query.page ? parseInt(req.query.page as string) : 1;
     const gameName = req.query.name ? req.query.name.toString() : "";
+    const userId = req.headers["user-id"];
 
-    if (isNaN(page)) {
+    if (!(await verifyUser(userId))) {
       return res
-        .status(400)
-        .json({
-          message:
-            "O parâmetro de consulta de página deve ser do tipo numérico!",
-        });
+        .status(401)
+        .json({ message: "Você não tem autorização para essa requisição" });
+    }
+    
+    if (isNaN(page)) {
+      return res.status(400).json({
+        message: "O parâmetro de consulta de página deve ser do tipo numérico!",
+      });
     }
 
     const gameList = await gameFilter(page, gameName);
@@ -53,4 +58,14 @@ async function gameFilter(page: number, gameName: string) {
   }
 
   return { games, prevPage, nextPage, totalPages, totalDocs };
+}
+
+async function verifyUser(id: string | string[] | undefined) {
+  const existingUser = await userModels.findById(id);
+
+  if (existingUser !== null) {
+    return true;
+  } else {
+    return false;
+  }
 }

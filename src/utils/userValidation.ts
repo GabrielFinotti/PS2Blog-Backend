@@ -40,7 +40,7 @@ export const validateUserData = async (
 export const updateData = async (
   userData: UserData,
   id: mongoose.Types.ObjectId
-): Promise<void | string> => {
+) => {
   let updateData: Partial<UserData> = {};
   const existingUser = await userModel.findById(id);
   const existingPassword = await userModel.findById(id, { password: true });
