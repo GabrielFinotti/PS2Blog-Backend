@@ -1,5 +1,5 @@
 {
-  "name": "ps2blog-backend",
+  "name": "ps2blog-api",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
