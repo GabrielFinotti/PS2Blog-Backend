@@ -1,5 +1,5 @@
+import { railwayDb } from "./../db/railwayConnect";
 import express from "express";
-import { connect } from "../db/connect";
 import cors from "cors";
 import { scrapingCron } from "./job/scrapingCron";
 import { router } from "./routes/routers";
@@ -14,7 +14,7 @@ app.use(
 
 scrapingCron.start();
 
-connect;
+railwayDb();
 
 app.use("/", router.userRouter, router.gameListRouter);
 
