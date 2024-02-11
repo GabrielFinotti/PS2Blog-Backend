@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://ps2-blog-frontend.vercel.app",
+    origin: "http://localhost:4200",
   })
 );
 
