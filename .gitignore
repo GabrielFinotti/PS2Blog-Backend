@@ -1,6 +1,7 @@
 # Foulders
 node_modules
 dist
+db
 cache
 cert
 md
