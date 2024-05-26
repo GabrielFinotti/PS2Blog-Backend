@@ -1,7 +1,6 @@
-# Foulders
 node_modules
 dist
-cache
-cert
-md
 logs
+env
+
+package-lock.json
