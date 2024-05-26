@@ -1,6 +1,8 @@
+# Folders
 node_modules
 dist
 logs
-env
 
+# Files
+.env
 package-lock.json
