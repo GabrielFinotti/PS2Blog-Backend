@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import { GameList } from "../interfaces/gameList";
 
-const gameListSchema: Schema = new Schema(
+const gameListSchema: Schema<GameList> = new Schema<GameList>(
   {
     name: {
       type: String,
