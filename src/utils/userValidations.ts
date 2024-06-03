@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { User } from "../interfaces/user";
 import { userModel } from "../models/userModel";
 import bcrypt from "bcrypt";
@@ -19,9 +20,9 @@ export const userDataRegister = async (
   }
 
   if (username.length < 5 || username.length > 16) {
-    return "Username must be a minimum of 5 and a maximum of 16 characters";
+    return "Username must be a minimum of 5 and a maximum of 16 characters!";
   } else if (password.length < 8 || password.length > 20) {
-    return "Password must have a minimum of 8 and a maximum of 16 characters";
+    return "Password must have a minimum of 8 and a maximum of 16 characters!";
   }
 
   if (!emailRegex.test(email)) return "Enter a valid email";
@@ -52,4 +53,19 @@ export const userDataLogin = async (userData: User) => {
   }
 
   return { message: "Save loaded successfully, good game!", status: 200 };
+};
+
+export const requestUserData = async (id: string) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) return "Invalid id!";
+
+  const user = await userModel.findById(id, {
+    _id: false,
+    password: false,
+  });
+
+  if (!user) {
+    return "Id does not match any user!";
+  }
+
+  return user;
 };
