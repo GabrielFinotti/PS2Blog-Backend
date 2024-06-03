@@ -32,6 +32,10 @@ const userSchema: Schema<User> = new Schema<User>(
       required: false,
       default: undefined,
     },
+    favorites: {
+      type: Array<String>,
+      required: false,
+    },
   },
   { timestamps: true }
 );

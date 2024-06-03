@@ -1,4 +1,6 @@
 import { User } from "../interfaces/user";
+import { userModel } from "../models/userModel";
+import bcrypt from "bcrypt";
 
 export const userDataRegister = async (
   userData: User
@@ -24,5 +26,30 @@ export const userDataRegister = async (
 
   if (!emailRegex.test(email)) return "Enter a valid email";
 
+  const hashPassword = await bcrypt.hash(password, 10);
+
+  userData.password = hashPassword;
+
   return userData;
+};
+
+export const userDataLogin = async (userData: User) => {
+  const { email, password } = userData;
+
+  if (!email || !password) {
+    return { message: "No field can be empty!", status: 400 };
+  }
+
+  const existingUser = await userModel.findOne({ email });
+
+  if (!existingUser) return { message: "No users found!", status: 404 };
+
+  if (existingUser?.password) {
+    const verifyPass = await bcrypt.compare(password, existingUser.password);
+
+    if (!verifyPass)
+      return { message: "Incorrect data, check and try again!", status: 403 };
+  }
+
+  return { message: "Save loaded successfully, good game!", status: 200 };
 };
