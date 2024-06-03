@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { GameList } from "../interfaces/gameList";
 
 const gameListSchema: Schema<GameList> = new Schema<GameList>(
@@ -19,4 +19,8 @@ const gameListSchema: Schema<GameList> = new Schema<GameList>(
   { timestamps: true }
 );
 
-export const gameList = mongoose.model("GameList", gameListSchema, "gameList");
+export const gameListModel = model<GameList>(
+  "GameList",
+  gameListSchema,
+  "gameList"
+);
