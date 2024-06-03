@@ -6,7 +6,7 @@ export const getUserData = async (req: Request, res: Response) => {
     const result = await requestUserData(req.params.id);
 
     if (typeof result === "string") {
-      return res.status(400).send({ message: result });
+      return res.status(401).send({ message: result });
     }
 
     res.status(200).send(result);

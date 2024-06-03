@@ -6,4 +6,4 @@ export const userRouter = Router();
 userRouter.post("/user/register", controllers.userRegister);
 userRouter.post("/user/login", controllers.userLogin);
 userRouter.post("/user/data/:id", controllers.getUserData);
-userRouter.post("/user/update/:id", controllers.userUpdate);
+userRouter.put("/user/update/:id", controllers.userUpdate);
