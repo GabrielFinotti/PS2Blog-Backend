@@ -33,7 +33,7 @@ const userSchema: Schema<User> = new Schema<User>(
       default: undefined,
     },
     favorites: {
-      type: Array<String>,
+      type: Array<Object>,
       required: false,
       default: undefined,
     },
