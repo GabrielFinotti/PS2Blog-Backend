@@ -12,11 +12,7 @@ export const userDataRegister = async (
 
   if (!username || !email || !password) return "No field can be empty!";
 
-  if (
-    username != username.trim() ||
-    email != email.trim() ||
-    password != password.trim()
-  ) {
+  if (username != username.trim() || password != password.trim()) {
     return "Fields cannot begin or end with spaces!";
   }
 
