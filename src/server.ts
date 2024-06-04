@@ -1,11 +1,18 @@
 import express, { json } from "express";
 import dotenv from "dotenv";
 import config from "./db/config";
+import cors from "cors";
 import { routers } from "./routers/routers";
 export * from "colors";
 
 dotenv.config({ path: "./src/env/.env" });
 const app = express();
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  })
+);
 
 app.use(json());
 
