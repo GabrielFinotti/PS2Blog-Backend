@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { userDataRegister } from "../../utils/userValidations";
 import { userModel } from "../../models/userModel";
+import { newJwtRegister } from "../../utils/jwtGenerate";
 
 export const userRegister = async (req: Request, res: Response) => {
   try {
@@ -26,12 +27,20 @@ export const userRegister = async (req: Request, res: Response) => {
 
     await user.save();
 
-    res
-      .status(201)
-      .json({
-        message: "User registered successfully",
-        data: [result.username, result.email],
-      });
+    const getUserRegisterToken = await newJwtRegister(user.id);
+
+    if (!getUserRegisterToken.token) {
+      return res.status(500).send({ message: getUserRegisterToken.message });
+    }
+
+    res.status(201).json({
+      message: "Save created successfully, have fun!",
+      data: {
+        username: result.username,
+        email: result.email,
+        token: getUserRegisterToken.token,
+      },
+    });
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
 
