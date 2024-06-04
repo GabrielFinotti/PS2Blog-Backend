@@ -13,7 +13,7 @@ export const userLogin = async (req: Request, res: Response) => {
 
     const userData = await userModel.findOne(
       { email: req.body.email },
-      { _id: true }
+      { _id: true, username: true }
     );
 
     const getUserLoginToken = await newJwtLogin(userData?.id);
@@ -24,7 +24,7 @@ export const userLogin = async (req: Request, res: Response) => {
 
     res.status(status).json({
       message: message,
-      id: userData?.id,
+      username: userData?.username,
       token: getUserLoginToken.token,
     });
   } catch (error) {
