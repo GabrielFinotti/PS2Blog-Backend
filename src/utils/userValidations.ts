@@ -110,6 +110,15 @@ export const userDataUpdate = async (userData: User, id: string) => {
   const update: Partial<User> = {};
 
   if (user.email != email) {
+    const existingUser = await userModel.findOne({ email });
+
+    if (existingUser) {
+      return {
+        message: "Email already in use, please try another one!",
+        status: 409,
+      };
+    }
+
     update.email = email;
   }
   if (user.username != username) {
