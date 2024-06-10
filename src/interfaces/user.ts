@@ -4,7 +4,4 @@ export interface User {
   password: string;
   bio?: string;
   image?: string;
-  favorites?: {
-    name: string;
-  }[];
 }
