@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import dotenv from "dotenv";
-import config from "./db/config";
+import mongoConfig from "./db/mongoConfig";
 import cors from "cors";
 import { routers } from "./routers/routers";
 export * from "colors";
@@ -20,7 +20,7 @@ app.listen(process.env.PORT, () => {
   console.log("PS2 Blog API activated ✅ ".green.bgBlack);
 });
 
-config()
+mongoConfig()
   .then(() => {
     app.use("/", routers.userRouter, routers.gameList);
   })
