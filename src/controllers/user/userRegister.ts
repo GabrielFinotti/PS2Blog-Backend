@@ -24,14 +24,15 @@ export const userRegister = async (req: Request, res: Response) => {
       email: result.email,
       password: result.password,
     });
-
-    await user.save();
-
+    
     const getUserRegisterToken = await newJwtRegister(user.id);
 
     if (!getUserRegisterToken.token) {
       return res.status(500).send({ message: getUserRegisterToken.message });
     }
+
+    await user.save();
+
 
     res.status(201).json({
       message: "Save created successfully, have fun!",
