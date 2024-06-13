@@ -17,8 +17,6 @@ export default async () => {
 
     let gameList: GameList[] = [];
 
-    console.log(`Scraping started...⚠️`.yellow.bgBlack);
-
     const browser = await puppeteer.launch();
 
     for (const url of urls) {
@@ -55,7 +53,7 @@ export default async () => {
     await gameListModel.deleteMany();
     await gameListModel.create(gameList);
 
-    console.log(`Game list scraping complete 🎮!`.green);
+    console.log(`Game list saved in the database 🎮!`.green);
   } catch (error) {
     console.log(
       `Error when trying to retrieve the game list, error: ${error}❗`.red

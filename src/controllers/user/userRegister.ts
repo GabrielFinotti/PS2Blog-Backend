@@ -32,8 +32,7 @@ export const userRegister = async (req: Request, res: Response) => {
     }
 
     await user.save();
-
-
+    
     res.status(201).json({
       message: "Save created successfully, have fun!",
       data: {
