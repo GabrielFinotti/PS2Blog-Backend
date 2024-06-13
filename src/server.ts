@@ -1,9 +1,9 @@
 import express, { json } from "express";
-import dotenv from "dotenv";
-import mongoConfig from "./db/mongoConfig";
 import cors from "cors";
-import { routers } from "./routers/routers";
+import dotenv from "dotenv";
 export * from "colors";
+import mongoConfig from "./db/mongoConfig";
+import { routers } from "./routers/routers";
 
 dotenv.config({ path: "./src/env/.env" });
 const app = express();
