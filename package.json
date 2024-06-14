@@ -10,7 +10,7 @@
     "start": "node dist/server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Gabriel H. Finotti",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
