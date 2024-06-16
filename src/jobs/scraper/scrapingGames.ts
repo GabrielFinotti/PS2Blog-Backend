@@ -48,14 +48,11 @@ export default async () => {
 
       await page.close();
     }
-
-    await browser.disconnect();
     await browser.close();
 
     await gameListModel.deleteMany();
     await gameListModel.create(gameList);
 
-    console.log(`Game list saved in the database 🎮!`.green);
     console.log(`Game list scraping complete ✅`.green.bgBlack);
   } catch (error) {
     console.log(

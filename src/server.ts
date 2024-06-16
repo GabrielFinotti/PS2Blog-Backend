@@ -26,8 +26,6 @@ mongoConfig()
     app.use("/", routers.userRouter, routers.gameList);
 
     scraperGameList.start();
-
-    scrapingGames();
   })
   .catch((error) => {
     console.log(`Connection fail, error: ${error}`.red.bgBlack);
