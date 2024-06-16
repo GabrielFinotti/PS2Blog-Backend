@@ -3,7 +3,8 @@ declare namespace NodeJS {
     PORT: number;
     SECRET_KEY: string;
     CLIENT_URL: string;
-    DB_URL: string;
+    DB_URL_DEV: string;
+    DB_URL_PROD: string;
     DB_NAME: string;
     FIREBASE_KEY: string;
     FIREBASE_DOMAIN: string;
