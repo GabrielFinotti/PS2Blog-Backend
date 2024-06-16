@@ -5,6 +5,8 @@ import { gameListModel } from "../../models/gameListModel";
 
 export default async () => {
   try {
+    console.log(`Scraping started...⚠️`.yellow.bgBlack);
+
     const urlJson: Array<{ url: string }> = JSON.parse(
       await fs.readFile("./src/public/json/urls.json", "utf-8")
     );
@@ -46,14 +48,12 @@ export default async () => {
 
       await page.close();
     }
-
-    await browser.disconnect();
     await browser.close();
 
     await gameListModel.deleteMany();
     await gameListModel.create(gameList);
 
-    console.log(`Game list saved in the database 🎮!`.green);
+    console.log(`Game list scraping complete ✅`.green.bgBlack);
   } catch (error) {
     console.log(
       `Error when trying to retrieve the game list, error: ${error}❗`.red
