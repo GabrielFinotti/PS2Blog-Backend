@@ -7,8 +7,8 @@ export const getGameList = async (req: Request, res: Response) => {
     const page = req.query.page ? parseInt(req.query.page as string) : 1;
 
     const docLimit: number = 20;
-    let nextPage!: number;
-    let prevPage!: number;
+    let nextPage!: number | undefined;
+    let prevPage!: number | undefined;
 
     const totalDocs = await gameListModel.countDocuments({
       name: { $regex: nameRef, $options: "i" },

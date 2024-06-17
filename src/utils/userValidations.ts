@@ -124,7 +124,7 @@ export const userDataUpdate = async (userData: User, id: string) => {
   if (user.username != username) {
     update.username = username;
   }
-  if (user.bio != bio && bio != undefined) {
+  if (bio && user.bio != bio) {
     update.bio = bio;
   }
 
