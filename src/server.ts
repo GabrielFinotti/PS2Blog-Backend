@@ -5,7 +5,6 @@ export * from "colors";
 import mongoConfig from "./db/mongoConfig";
 import { routers } from "./routers/routers";
 import { scraperGameList } from "./jobs/cron/enableScraping";
-import scrapingGames from "./jobs/scraper/scrapingGames";
 
 dotenv.config({ path: "./src/env/.env" });
 const app = express();

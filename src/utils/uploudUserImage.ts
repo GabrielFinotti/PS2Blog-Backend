@@ -50,7 +50,7 @@ export default async (
     const app = await firebaseConfig();
     const storage = getStorage(app);
 
-    const userImagePath = ref(storage, `${id}/Profile/${username}.${fileType}`);
+    const userImagePath = ref(storage, `${id}/Profile/${username}`);
 
     const uploadTask = uploadBytesResumable(
       userImagePath,

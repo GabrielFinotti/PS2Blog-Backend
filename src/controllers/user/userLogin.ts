@@ -5,6 +5,7 @@ import { newJwtLogin } from "../../utils/jwtGenerate";
 
 export const userLogin = async (req: Request, res: Response) => {
   try {
+    const saveProfile: boolean = req.body.save;
     const { message, status } = await userDataLogin(req.body);
 
     if (status != 200) {
@@ -16,7 +17,7 @@ export const userLogin = async (req: Request, res: Response) => {
       { _id: true, username: true }
     );
 
-    const getUserLoginToken = await newJwtLogin(userData?.id);
+    const getUserLoginToken = await newJwtLogin(userData?.id, saveProfile);
 
     if (!getUserLoginToken.token) {
       return res.status(500).send({ message: getUserLoginToken.message });

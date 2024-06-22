@@ -3,29 +3,21 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: "./src/env/.env" });
 
-export const newJwtRegister = async (userId: string) => {
+export const newJwtLogin = async (userId: string, saveProfile: boolean) => {
   try {
     const payload = { userId };
 
-    const token = jwt.sign(payload, process.env.SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    let token!: string;
 
-    return { token };
-  } catch (error) {
-    console.log(`Generate register token failed! Error: ${error}`.red.bgBlack);
-
-    return { token: null, message: "Generate register token failed!" };
-  }
-};
-
-export const newJwtLogin = async (userId: string) => {
-  try {
-    const payload = { userId };
-
-    const token = jwt.sign(payload, process.env.SECRET_KEY, {
-      expiresIn: "1d",
-    });
+    if (saveProfile) {
+      token = jwt.sign(payload, process.env.SECRET_KEY, {
+        expiresIn: "7d",
+      });
+    } else {
+      token = jwt.sign(payload, process.env.SECRET_KEY, {
+        expiresIn: "1d",
+      });
+    }
 
     return { token };
   } catch (error) {
