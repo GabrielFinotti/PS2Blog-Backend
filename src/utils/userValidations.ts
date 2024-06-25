@@ -53,7 +53,11 @@ export const userDataLogin = async (userData: User) => {
     }
   }
 
-  return { message: "Save loaded successfully, good game!", status: 200 };
+  return {
+    message: "Save loaded successfully, good game!",
+    status: 200,
+    existingUser,
+  };
 };
 
 export const requestUserData = async (id: string) => {
