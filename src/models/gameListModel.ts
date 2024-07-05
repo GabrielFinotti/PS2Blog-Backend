@@ -1,26 +1,68 @@
 import { model, Schema } from "mongoose";
-import { GameList } from "../interfaces/gameList";
+import { Game } from "../interfaces/game";
 
-const gameListSchema: Schema<GameList> = new Schema<GameList>(
+const gameSchema: Schema<Game> = new Schema<Game>(
   {
+    image: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
     },
-    size: {
+    release: {
       type: String,
       required: true,
     },
-    href: {
+    category: {
       type: String,
       required: true,
+    },
+    rating: {
+      type: Number,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    downloads: {
+      type: [
+        {
+          url: String,
+        },
+      ],
+      default: undefined,
+    },
+    likes: {
+      type: {
+        totalLikes: Number,
+        user: [
+          {
+            userID: {
+              type: Schema.Types.ObjectId,
+              ref: "User",
+            },
+          },
+        ],
+      },
+      default: undefined,
+    },
+    comments: {
+      type: [
+        {
+          userID: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+          },
+          comment: String,
+        },
+      ],
+      default: undefined,
     },
   },
   { timestamps: true }
 );
 
-export const gameListModel = model<GameList>(
-  "GameList",
-  gameListSchema,
-  "gameList"
-);
+export const gameListModel = model<Game>("Game", gameSchema, "gameList");

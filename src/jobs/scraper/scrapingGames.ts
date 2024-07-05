@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import puppeteer from "puppeteer";
-import { GameList } from "../../interfaces/gameList";
+import { GameList } from "../../interfaces/game";
 import { gameListModel } from "../../models/gameListModel";
 
 export default async () => {
