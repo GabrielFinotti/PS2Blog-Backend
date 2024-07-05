@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { gameListModel } from "../../models/gameListModel";
+import { gameListModel } from "../../models/gameModel";
 
 export const getGameList = async (req: Request, res: Response) => {
   try {

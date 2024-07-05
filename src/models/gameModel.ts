@@ -65,4 +65,4 @@ const gameSchema: Schema<Game> = new Schema<Game>(
   { timestamps: true }
 );
 
-export const gameListModel = model<Game>("Game", gameSchema, "gameList");
+export const gameModel = model<Game>("Game", gameSchema, "gameList");
