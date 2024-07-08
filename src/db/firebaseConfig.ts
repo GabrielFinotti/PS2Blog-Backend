@@ -6,5 +6,7 @@ export default async () => {
     await fs.readFile("./src/secret/firebase.json", "utf-8")
   );
 
-  initializeApp({ credential: credential.cert(serviceAccount) });
+  return initializeApp({
+    credential: credential.cert(serviceAccount),
+  });
 };

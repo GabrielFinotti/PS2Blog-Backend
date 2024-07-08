@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { userDataUpdate } from "../../utils/userValidations";
+import { userDataUpdate } from "../../utils/user/userValidations";
 
 export const userUpdate = async (req: Request, res: Response) => {
   try {
