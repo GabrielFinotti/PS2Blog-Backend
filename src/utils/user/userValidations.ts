@@ -32,6 +32,18 @@ export const dataRegister = async (data: User) => {
   return true;
 };
 
+export const dataLogin = async (data: User) => {
+  const { email, password } = data;
+
+  if (!email || !password) {
+    return { message: "No field can be empty!" };
+  } else if (!emailRegex.test(email)) {
+    return { message: "Enter a valid email!" };
+  }
+
+  return true;
+};
+
 export const findUserByEmail = async (email: string) => {
   const user = await userModel.findOne({ email });
 
@@ -44,4 +56,10 @@ export const hashPass = async (pass: string) => {
   const password = await bcrypt.hash(pass, 10);
 
   return password;
+};
+
+export const verifyHasPass = async (pass: string, userSavePass: string) => {
+  const isPass = await bcrypt.compare(pass, userSavePass);
+
+  return isPass;
 };

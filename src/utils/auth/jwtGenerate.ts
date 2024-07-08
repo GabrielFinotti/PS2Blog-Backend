@@ -11,7 +11,7 @@ export const newJwtLogin = async (userId: string, saveProfile: boolean) => {
 
     if (saveProfile) {
       token = jwt.sign(payload, process.env.SECRET_KEY, {
-        expiresIn: "7d",
+        expiresIn: "30d",
       });
     } else {
       token = jwt.sign(payload, process.env.SECRET_KEY, {

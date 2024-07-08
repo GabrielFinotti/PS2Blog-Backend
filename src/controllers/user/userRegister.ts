@@ -41,7 +41,7 @@ export const googleRegister = async (req: Request, res: Response) => {
 
     if (!uid) {
       return res.status(401).send({
-        message: "Credentials required for Google account registration!",
+        message: "Credentials required to register with Google account!",
       });
     }
 
@@ -71,12 +71,9 @@ export const googleRegister = async (req: Request, res: Response) => {
 
     await user.save();
 
-    return res
-      .status(201)
-      .json({
-        message:
-          "Save created successfully, go to account settings to change the automatically generated password if you prefer!",
-      });
+    return res.status(201).json({
+      message: "Save created successfully!",
+    });
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
     return res.sendStatus(500);
