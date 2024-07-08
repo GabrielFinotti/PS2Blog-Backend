@@ -1,15 +1,10 @@
-import { initializeApp } from "firebase/app";
-import dotenv from "dotenv";
+import { credential, initializeApp } from "firebase-admin";
+import fs from "fs-extra";
 
-dotenv.config({ path: "./src/env/.env" });
+export default async () => {
+  const serviceAccount: object = JSON.parse(
+    await fs.readFile("./src/secret/firebase.json", "utf-8")
+  );
 
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_KEY,
-  authDomain: process.env.FIREBASE_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGE,
-  appId: process.env.FIREBASE_AP_ID,
+  initializeApp({ credential: credential.cert(serviceAccount) });
 };
-
-export default async () => initializeApp(firebaseConfig);

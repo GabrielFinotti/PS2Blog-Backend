@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { userDataLogin } from "../../utils/userValidations";
-import { newJwtLogin } from "../../utils/jwtGenerate";
+import { newJwtLogin } from "../../utils/auth/jwtGenerate";
 
 export const userLogin = async (req: Request, res: Response) => {
   try {

@@ -1,41 +1,35 @@
 import { Request, Response } from "express";
-import { userDataRegister } from "../../utils/userValidations";
+import {
+  dataRegister,
+  findUserByEmail,
+  hashPass,
+} from "../../utils/userValidations";
 import { userModel } from "../../models/userModel";
 
 export const userRegister = async (req: Request, res: Response) => {
   try {
-    const result = await userDataRegister(req.body);
+    const validationResult = await dataRegister(req.body);
 
-    if (typeof result === "string") {
-      return res.status(400).json({ message: result });
+    if (typeof validationResult === "object") {
+      return res.status(400).send(validationResult);
     }
 
-    const existingUser = await userModel.findOne({ email: result.email });
+    const findUser = await findUserByEmail(req.body.email);
 
-    if (existingUser) {
-      return res
-        .status(409)
-        .send({ message: "There is already an account linked to this email!" });
+    if (findUser) {
+      return res.status(409).json({ message: "This email is already in use!" });
     }
 
-    const user = new userModel({
-      username: result.username,
-      email: result.email,
-      password: result.password,
-    });
+    const password = await hashPass(req.body.password);
+    req.body.password = password;
+
+    const user = new userModel(req.body);
 
     await user.save();
 
-    res.status(201).json({
-      message: "Save created successfully, have fun!",
-      data: {
-        username: result.username,
-        email: result.email,
-      },
-    });
+    return res.status(201).json({ message: "Save created successfully!" });
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
-
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 };

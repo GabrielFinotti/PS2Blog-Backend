@@ -17,12 +17,12 @@ app.use(
 
 app.listen(process.env.PORT, () => {
   console.log("PS2 Blog API activated ✅ ".green.bgBlack);
-});
 
-mongoConfig()
-  .then(() => {
-    app.use("/", routers.userRouter, routers.gameList);
-  })
-  .catch((error) => {
-    console.log(`Connection fail, error: ${error}`.red.bgBlack);
-  });
+  mongoConfig()
+    .then(() => {
+      app.use("/", routers.userRouter, routers.gameList);
+    })
+    .catch((error) => {
+      console.log(`Connection fail, error: ${error}`.red.bgBlack);
+    });
+});
