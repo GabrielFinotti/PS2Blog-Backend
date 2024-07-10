@@ -1,4 +1,4 @@
-import { getGameList } from "./gameList/getGameList";
+import { gameListData } from "./gameList/gameListData";
 import { userData } from "./user/userData";
 import { googleLogin, userLogin } from "./user/userLogin";
 import { googleRegister, userRegister } from "./user/userRegister";
@@ -11,5 +11,5 @@ export const controllers = {
   googleLogin,
   userUpdate,
   userData,
-  getGameList,
+  gameListData,
 };

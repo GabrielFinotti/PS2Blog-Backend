@@ -6,6 +6,8 @@ export interface User {
   image: string;
   likedGames: {
     totalLikes: number;
-    games: string[];
+    games: {
+      gameId: string;
+    }[];
   };
 }

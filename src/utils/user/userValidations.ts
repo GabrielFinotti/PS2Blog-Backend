@@ -50,7 +50,7 @@ export const dataUpdate = async (
   user: Document<unknown, {}, User> & User,
   currentPass?: string
 ) => {
-  let newData!: Partial<User>;
+  let newData: Partial<User> = {};
   const messages: string[] = [];
 
   if (data.username) {
@@ -75,22 +75,26 @@ export const dataUpdate = async (
         "Please enter your current password to create a new password."
       );
     } else {
-      const isPass = await verifyHasPass(currentPass, data.password);
+      const isPass = await verifyHasPass(currentPass, user.password);
 
       if (data.password.length < 8 || data.password.length > 20) {
         messages.push(
           "Password must be a minimum of 8 and a maximum of 20 characters!"
         );
+      } else if (data.password != data.password.trim()) {
+        messages.push("Password cannot begin and end with spaces");
       } else if (!isPass) {
         messages.push(
           "Current password sent is not the same as saved, check and try again to create a new password!"
         );
-      } else if (data.password === user.password) {
-        messages.push("That's the password!");
       } else {
-        newData.password = await hashPass(data.password);
+        if (data.password === currentPass) {
+          messages.push("That's the password!");
+        } else {
+          newData.password = await hashPass(data.password);
 
-        messages.push("Password updated successfully!");
+          messages.push("Password updated successfully!");
+        }
       }
     }
   }
@@ -131,9 +135,9 @@ export const dataUpdate = async (
 
   if (Object.keys(newData).length > 0) {
     await user.updateOne({ $set: newData });
-
-    return messages;
   }
+
+  return messages;
 };
 
 export const findUserByEmail = async (email: string) => {

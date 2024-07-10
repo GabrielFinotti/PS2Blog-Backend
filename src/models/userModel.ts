@@ -27,7 +27,7 @@ const userSchema: Schema<User> = new Schema<User>(
     },
     image: {
       type: String,
-      default: undefined,
+      default: "",
       required: false,
     },
     likedGames: {
@@ -35,12 +35,15 @@ const userSchema: Schema<User> = new Schema<User>(
         totalLikes: Number,
         games: [
           {
-            type: Schema.Types.ObjectId,
-            ref: "Game",
+            gameId: {
+              type: Schema.Types.ObjectId,
+              ref: "Game",
+            },
           },
         ],
       },
       default: { totalLikes: 0, games: [] },
+      required: false,
     },
   },
   { timestamps: true }
