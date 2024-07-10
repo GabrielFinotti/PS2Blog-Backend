@@ -84,7 +84,11 @@ export const googleLogin = async (req: Request, res: Response) => {
 
     return res
       .status(200)
-      .send({ message: "Save loaded successfully, good play!", token });
+      .send({
+        message: "Save loaded successfully, good play!",
+        token,
+        username: findUser.username,
+      });
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
 
