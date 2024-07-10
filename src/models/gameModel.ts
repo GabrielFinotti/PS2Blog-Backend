@@ -33,7 +33,7 @@ const gameSchema: Schema<Game> = new Schema<Game>(
           url: String,
         },
       ],
-      default: undefined,
+      default: [],
     },
     likes: {
       type: {
@@ -47,7 +47,7 @@ const gameSchema: Schema<Game> = new Schema<Game>(
           },
         ],
       },
-      default: undefined,
+      default: { totalLikes: 0, user: [] },
     },
     comments: {
       type: [
@@ -59,7 +59,7 @@ const gameSchema: Schema<Game> = new Schema<Game>(
           comment: String,
         },
       ],
-      default: undefined,
+      default: [],
     },
   },
   { timestamps: true }

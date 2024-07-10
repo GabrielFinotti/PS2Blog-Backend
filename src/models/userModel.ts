@@ -40,6 +40,7 @@ const userSchema: Schema<User> = new Schema<User>(
           },
         ],
       },
+      default: { totalLikes: 0, games: [] },
     },
   },
   { timestamps: true }

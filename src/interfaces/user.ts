@@ -3,8 +3,8 @@ export interface User {
   email: string;
   password: string;
   bio: string;
-  image?: string;
-  likedGames?: {
+  image: string;
+  likedGames: {
     totalLikes: number;
     games: string[];
   };
