@@ -1,7 +1,7 @@
 export interface GameFilter {
   name?: string;
+  release?: string;
   category?: string;
-  year?: number;
-  alphabeticalSorting?: string;
-  rating?: number;
+  limit?: number;
+  page?: number;
 }
