@@ -4,12 +4,12 @@ import { dataUpdate, findUserById } from "../../utils/user/userValidations";
 export const userUpdate = async (req: Request, res: Response) => {
   try {
     const verifyUser = await findUserById(req.params.id);
-    const currentPass = req.body.currentPass as string | undefined;
 
     if (!verifyUser) {
       return res.status(404).send({ message: "No saves found!" });
     }
 
+    const currentPass = req.body.currentPass as string | undefined;
     const updateResult = await dataUpdate(req.body, verifyUser, currentPass);
 
     if (updateResult.length > 0) {

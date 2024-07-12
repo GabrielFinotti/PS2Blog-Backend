@@ -133,11 +133,32 @@ export const dataUpdate = async (
     }
   }
 
+  if (data.image) {
+    newData.image = data.image;
+  }
+
   if (Object.keys(newData).length > 0) {
     await user.updateOne({ $set: newData });
   }
 
   return messages;
+};
+
+export const getData = async (id: string) => {
+  try {
+    let user = await userModel.findById(id, { password: false }).populate({
+      path: "likedGames.games.gameId",
+      select: "image name category",
+    });
+
+    if (user?.likedGames && user.likedGames.games.length > 10) {
+      user = user.toObject();
+    }
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const findUserByEmail = async (email: string) => {

@@ -1,4 +1,4 @@
-import { gameSearch } from "./gameList/gameSearch";
+import { defaultGameSearch } from "./gameList/defaultGameSearch";
 import { likeGameSearch } from "./gameList/likeGameSearch";
 import { ratingGameSearch } from "./gameList/ratingGameSearch";
 import { userData } from "./user/userData";
@@ -13,7 +13,7 @@ export const controllers = {
   googleLogin,
   userUpdate,
   userData,
-  gameSearch,
+  defaultGameSearch,
   likeGameSearch,
   ratingGameSearch,
 };

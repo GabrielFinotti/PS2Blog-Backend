@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { GameFilter } from "../../interfaces/gameFilter";
 import { defaultGameFilter } from "../../utils/gameList/defaultGameFilter";
 
-export const gameSearch = async (req: Request, res: Response) => {
+export const defaultGameSearch = async (req: Request, res: Response) => {
   try {
     const { name, category, release } = req.query as GameFilter;
 
