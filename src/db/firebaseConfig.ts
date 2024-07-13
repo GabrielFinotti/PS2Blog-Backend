@@ -1,8 +1,10 @@
-import admin from "firebase-admin";
+import * as admin from "firebase-admin";
 import fs from "fs-extra";
 
 export default async () => {
   try {
+    console.log("Establishing connection to firebase ⚠️".yellow.bgBlack);
+
     const serviceAccount = await fs.readJSON("./src/secret/firebase.json");
 
     admin.initializeApp({

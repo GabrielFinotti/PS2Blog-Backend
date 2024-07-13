@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { findUserById } from "../../utils/user/userValidations";
-import admin from "firebase-admin";
 
 export const deleteUser = async (req: Request, res: Response) => {
   try {

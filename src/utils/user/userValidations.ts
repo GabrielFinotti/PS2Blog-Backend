@@ -135,6 +135,8 @@ export const dataUpdate = async (
 
   if (data.image) {
     newData.image = data.image;
+
+    messages.push("Image updated successfully!");
   }
 
   if (Object.keys(newData).length > 0) {
@@ -151,7 +153,7 @@ export const getData = async (id: string) => {
       select: "image name category",
     });
 
-    if (user?.likedGames && user.likedGames.games.length > 10) {
+    if (user) {
       user = user.toObject();
     }
 
