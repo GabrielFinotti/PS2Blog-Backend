@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 export * from "colors";
 import mongoConfig from "./db/mongoConfig";
 import { routers } from "./routers/routers";
+import firebaseConfig from "./db/firebaseConfig";
 
 dotenv.config({ path: "./src/env/.env" });
 const app = express();
@@ -21,6 +22,7 @@ app.listen(process.env.PORT, () => {
   mongoConfig()
     .then(() => {
       app.use("/", routers.userRouter, routers.gameList);
+      firebaseConfig();
     })
     .catch((error) => {
       console.log(`Connection fail, error: ${error}`.red.bgBlack);

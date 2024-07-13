@@ -4,8 +4,8 @@ import {
   findUserByEmail,
   hashPass,
 } from "../../utils/user/userValidations";
-import { userModel } from "../../models/userModel";
 import firebaseConfig from "../../db/firebaseConfig";
+import { userModel } from "../../models/userModel";
 
 export const userRegister = async (req: Request, res: Response) => {
   try {

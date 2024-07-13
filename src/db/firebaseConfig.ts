@@ -1,12 +1,17 @@
-import { credential, initializeApp } from "firebase-admin";
+import admin from "firebase-admin";
 import fs from "fs-extra";
 
 export default async () => {
-  const serviceAccount: object = JSON.parse(
-    await fs.readFile("./src/secret/firebase.json", "utf-8")
-  );
+  try {
+    const serviceAccount = await fs.readJSON("./src/secret/firebase.json");
 
-  return initializeApp({
-    credential: credential.cert(serviceAccount),
-  });
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      storageBucket: "ps2-blog-cloud.appspot.com",
+    });
+
+    console.log("Firebase instance started ✅".cyan.bgBlack);
+  } catch (error) {
+    console.log(`Error starting firebase: ${error}`);
+  }
 };

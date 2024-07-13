@@ -9,7 +9,7 @@ export default async () => {
 
     await mongoose.connect(process.env.DB_URL, { dbName: process.env.DB_NAME });
 
-    console.log("Connected Database!".cyan);
+    console.log("Connected Database ✅".cyan.bgBlack);
   } catch (error) {
     throw error;
   }
