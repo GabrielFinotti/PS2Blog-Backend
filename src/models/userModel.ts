@@ -33,16 +33,20 @@ const userSchema: Schema<User> = new Schema<User>(
     likedGames: {
       type: {
         totalLikes: Number,
-        games: [
-          {
-            gameId: {
-              type: Schema.Types.ObjectId,
-              ref: "Game",
+        games: {
+          type: [
+            {
+              gameId: {
+                type: Schema.Types.ObjectId,
+                ref: "Game",
+              },
             },
-          },
-        ],
+          ],
+          _id: false,
+        },
       },
       default: { totalLikes: 0, games: [] },
+      _id: false,
       required: false,
     },
   },

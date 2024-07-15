@@ -5,7 +5,8 @@ const gameSchema: Schema<Game> = new Schema<Game>(
   {
     image: {
       type: String,
-      required: true,
+      default: "",
+      required: false,
     },
     name: {
       type: String,
@@ -15,17 +16,29 @@ const gameSchema: Schema<Game> = new Schema<Game>(
       type: String,
       required: true,
     },
+    plataforms: {
+      type: [
+        {
+          name: String,
+        },
+      ],
+      required: true,
+      _id: false,
+    },
     category: {
       type: String,
-      required: true,
+      default: "",
+      required: false,
     },
     rating: {
       type: Number,
-      required: true,
+      default: 0,
+      required: false,
     },
     description: {
       type: String,
-      required: true,
+      default: "",
+      required: false,
     },
     downloads: {
       type: [
@@ -34,25 +47,33 @@ const gameSchema: Schema<Game> = new Schema<Game>(
         },
       ],
       default: [],
+      _id: false,
+      required: false,
     },
     likes: {
       type: {
         totalLikes: Number,
-        user: [
-          {
-            userID: {
-              type: Schema.Types.ObjectId,
-              ref: "User",
+        users: {
+          type: [
+            {
+              userId: {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+              },
             },
-          },
-        ],
+          ],
+          _id: false,
+        },
       },
-      default: { totalLikes: 0, user: [] },
+      default: { totalLikes: 0, users: [] },
+      _id: false,
+      required: false,
     },
+
     comments: {
       type: [
         {
-          userID: {
+          userId: {
             type: Schema.Types.ObjectId,
             ref: "User",
           },
@@ -60,6 +81,8 @@ const gameSchema: Schema<Game> = new Schema<Game>(
         },
       ],
       default: [],
+      _id: false,
+      required: false,
     },
   },
   { timestamps: true }

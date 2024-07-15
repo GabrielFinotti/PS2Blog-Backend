@@ -5,5 +5,6 @@ declare namespace NodeJS {
     DB_URL: string;
     PORT: number;
     SECRET_KEY: string;
+    MOBY_API_KEY: string;
   }
 }
