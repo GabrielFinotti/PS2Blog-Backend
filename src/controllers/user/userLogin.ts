@@ -38,9 +38,10 @@ export const userLogin = async (req: Request, res: Response) => {
       return res.status(500).json(token.message);
     }
 
-    return res
-      .status(200)
-      .send({ message: "Save loaded successfully, good play!", token });
+    return res.status(200).send({
+      message: "Save loaded successfully, good play!",
+      token: token.token,
+    });
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
 

@@ -1,4 +1,5 @@
 import { defaultGameSearch } from "./gameList/defaultGameSearch";
+import { gameCategoriesAndYears } from "./gameList/gameCategoriesAndYears";
 import { likeGameSearch } from "./gameList/likeGameSearch";
 import { ratingGameSearch } from "./gameList/ratingGameSearch";
 import { deleteUser } from "./user/deleteUser";
@@ -16,4 +17,5 @@ export const controllers = {
   defaultGameSearch,
   likeGameSearch,
   ratingGameSearch,
+  gameCategoriesAndYears,
 };

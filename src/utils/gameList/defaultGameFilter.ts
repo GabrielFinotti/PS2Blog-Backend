@@ -6,7 +6,7 @@ export const defaultGameFilter = async (param: GameFilter) => {
     const gameFilter: Partial<{
       name: RegExp;
       category: string;
-      release: string;
+      release: RegExp;
     }> = {};
 
     if (param.name) {
@@ -16,11 +16,11 @@ export const defaultGameFilter = async (param: GameFilter) => {
       gameFilter.category = param.category;
     }
     if (param.release) {
-      gameFilter.release = param.release;
+      gameFilter.release = new RegExp(param.release, "i");
     }
 
-    const docsLimit = param.limit ? param.limit : 10;
-    const pageNumb = param.page ? param.page : 1;
+    const docsLimit = param.limit ?? 10;
+    const pageNumb = param.page ?? 1;
 
     const totalDocs = await gameModel.countDocuments(gameFilter);
     const totalPages = Math.ceil(totalDocs / docsLimit);
