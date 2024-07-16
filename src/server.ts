@@ -22,7 +22,7 @@ app.listen(process.env.PORT, () => {
   mongoConfig()
     .then(() => {
       app.use("/", routers.userRouter, routers.gameList);
-      firebaseConfig().then(() => {});
+      firebaseConfig();
     })
     .catch((error) => {
       console.log(`Connection fail, error: ${error}`.red.bgBlack);
