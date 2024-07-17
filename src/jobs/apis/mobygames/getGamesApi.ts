@@ -5,9 +5,9 @@ import { filterGames } from "./filterGames";
 import { sleep } from "../../../utils/temp/sleep";
 import { saveGameToDatabase } from "./saveGamesDatabase";
 
-export const getGamesApi = async (offset: number = 0, count: number = 1) => {
-  let gameList: Partial<Game>[] = [];
+let gameList: Partial<Game>[] = [];
 
+export const getGamesApi = async (offset: number = 0, count: number = 1) => {
   try {
     console.log(
       `Starting the search for games. Call ${count} ⚠️`.yellow.bgBlack
