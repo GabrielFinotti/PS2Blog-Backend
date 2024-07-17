@@ -16,15 +16,16 @@ app.use(
   })
 );
 
-app.listen(process.env.PORT, () => {
-  console.log("PS2 Blog API activated ✅ ".green.bgBlack);
+app.listen(process.env.PORT, async () => {
+  try {
+    console.log("PS2 Blog API activated ✅ ".green.bgBlack);
 
-  mongoConfig()
-    .then(() => {
-      app.use("/", routers.userRouter, routers.gameList);
-      firebaseConfig();
-    })
-    .catch((error) => {
-      console.log(`Connection fail, error: ${error}`.red.bgBlack);
-    });
+    await mongoConfig();
+
+    app.use("/", routers.userRouter, routers.gameList);
+
+    await firebaseConfig();
+  } catch (error) {
+    console.log(`Connection fail, error: ${error}`.red.bgBlack);
+  }
 });

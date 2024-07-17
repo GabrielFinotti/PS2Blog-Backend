@@ -14,6 +14,6 @@ export default async () => {
 
     console.log("Firebase instance started ✅".cyan.bgBlack);
   } catch (error) {
-    console.log(`Error starting firebase: ${error}`);
+    console.log(`Error starting firebase: ${error}`.red.bgBlack);
   }
 };
