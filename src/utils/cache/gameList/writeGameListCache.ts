@@ -1,8 +1,8 @@
 import * as fs from "fs-extra";
-import { defaultGameFilter } from "../gameList/defaultGameFilter";
-import { likesGameFilter } from "../gameList/likesGameFilter";
-import { categoriesAndYearsFilter } from "../gameList/categoriesAndYearsFilter";
-import { ratingGameFilter } from "../gameList/ratingGameFilter";
+import { defaultGameFilter } from "../../gameList/defaultGameFilter";
+import { likesGameFilter } from "../../gameList/likesGameFilter";
+import { categoriesAndYearsFilter } from "../../gameList/categoriesAndYearsFilter";
+import { ratingGameFilter } from "../../gameList/ratingGameFilter";
 
 export const writeGameListCache = async () => {
   try {

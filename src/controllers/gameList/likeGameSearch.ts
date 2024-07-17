@@ -1,11 +1,23 @@
 import { Request, Response } from "express";
 import { likesGameFilter } from "../../utils/gameList/likesGameFilter";
+import { readGameListCache } from "../../utils/cache/gameList/readGameListCache";
 
 export const likeGameSearch = async (req: Request, res: Response) => {
   try {
-    const gameListData = await likesGameFilter();
+    const gameListCache = await readGameListCache();
 
-    return res.status(200).send(gameListData);
+    if (gameListCache) {
+      const gameListData = {
+        games: gameListCache.likesGames,
+        cache: true,
+      };
+
+      return res.status(200).send(gameListData);
+    } else {
+      const gameListData = await likesGameFilter();
+
+      return res.status(200).send(gameListData);
+    }
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
 

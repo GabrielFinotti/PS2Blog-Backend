@@ -27,22 +27,20 @@ export const defaultGameFilter = async (param: GameFilter) => {
 
     const gameList = await gameModel
       .find(gameFilter)
-      .select("image name release category rating")
       .skip((pageNumb - 1) * docsLimit)
       .limit(docsLimit)
       .lean();
 
-    let prevPage!: number | undefined;
-    let nextPage!: number | undefined;
+    const prevPage = pageNumb > 1 ? pageNumb - 1 : undefined;
+    const nextPage = pageNumb < totalPages ? pageNumb + 1 : undefined;
 
-    if (pageNumb > 1) {
-      prevPage = pageNumb - 1;
-    }
-    if (pageNumb < totalPages) {
-      nextPage = pageNumb + 1;
-    }
-
-    return { totalDocs, totalPages, prevPage, nextPage, gameList };
+    return {
+      totalDocs,
+      totalPages,
+      prevPage,
+      nextPage,
+      gameList,
+    };
   } catch (error) {
     throw error;
   }

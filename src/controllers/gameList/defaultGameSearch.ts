@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { GameFilter } from "../../interfaces/gameFilter";
 import { defaultGameFilter } from "../../utils/gameList/defaultGameFilter";
+import { filterCachedGames } from "../../utils/cache/gameList/filterCachedGames";
+import { readGameListCache } from "../../utils/cache/gameList/readGameListCache";
 
 export const defaultGameSearch = async (req: Request, res: Response) => {
   try {
@@ -22,11 +24,19 @@ export const defaultGameSearch = async (req: Request, res: Response) => {
       ? parseInt(req.query.page as string)
       : undefined;
 
-    const param: GameFilter = { name, category, release, limit, page };
+    const params: GameFilter = { name, category, release, limit, page };
 
-    const gameListData = await defaultGameFilter(param);
+    const gameListCache = await readGameListCache();
 
-    return res.status(200).send(gameListData);
+    if (gameListCache) {
+      const gameList = await filterCachedGames(params, gameListCache);
+
+      return res.status(200).send(gameList);
+    } else {
+      const gameList = await defaultGameFilter(params);
+
+      return res.status(200).send(gameList);
+    }
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
 
