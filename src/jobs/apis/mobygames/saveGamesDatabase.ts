@@ -1,3 +1,4 @@
+import { AnyBulkWriteOperation } from "mongoose";
 import { Game } from "../../../interfaces/game";
 import { gameModel } from "../../../models/gameModel";
 
@@ -10,7 +11,7 @@ export const saveGameToDatabase = async (games: Partial<Game>[]) => {
       session.startTransaction();
 
       try {
-        const bulkOps = games.map((game) => ({
+        const bulkOps: AnyBulkWriteOperation<Game>[] = games.map((game) => ({
           updateOne: {
             filter: { name: game.name },
             update: { $set: game },

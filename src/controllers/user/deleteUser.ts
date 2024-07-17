@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { findUserById } from "../../utils/user/userValidations";
+import { deleteLike } from "../../utils/gameList/deleteLike";
+import { deleteComment } from "../../utils/gameList/deleteComment";
 
 export const deleteUser = async (req: Request, res: Response) => {
   try {
@@ -9,14 +11,19 @@ export const deleteUser = async (req: Request, res: Response) => {
       return res.status(404).send({ message: "No saves found!" });
     }
 
+    await deleteLike(user.id);
+    await deleteComment(user.id);
+
     await user.deleteOne();
 
     return res.status(200).send({
       message: "Save deleted successfully!",
     });
   } catch (error) {
-    console.log(`Error: ${error}`);
-    
+    console.log(
+      `Error trying to delete your save, try again. Error: ${error}`.red.bgBlack
+    );
+
     return res.status(500).send({
       message: `Error trying to delete your save, try again. Error: ${error}`,
     });
