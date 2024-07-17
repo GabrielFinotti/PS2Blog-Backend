@@ -16,7 +16,7 @@ export const ratingGameSearch = async (req: Request, res: Response) => {
     } else {
       const gameListData = await ratingGameFilter();
 
-      return res.status(200).send(gameListData);
+      return res.status(200).send({ games: gameListData });
     }
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
