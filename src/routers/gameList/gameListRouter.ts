@@ -12,5 +12,18 @@ gameList.get(
   authenticate,
   controllers.gameCategoriesAndYears
 );
+
 gameList.put("/games/sendLike/:gameId", authenticate, controllers.sendLikeGame);
-gameList.put("/games/sendComment/:gameId", authenticate, controllers.sendCommentGame);
+gameList.put(
+  "/games/sendComment/:gameId",
+  authenticate,
+  controllers.sendCommentGame
+);
+
+gameList.delete(
+  "/games/deleteLike/:gameId",
+  authenticate,
+  controllers.deleteGameLike
+);
+gameList.delete("/games/deleteComment/:gameId", authenticate),
+  controllers.deleteGameComment;
