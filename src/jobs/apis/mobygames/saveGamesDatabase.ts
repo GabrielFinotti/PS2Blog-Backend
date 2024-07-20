@@ -7,30 +7,17 @@ export const saveGameToDatabase = async (games: Partial<Game>[]) => {
     if (games.length) {
       console.log("Saving the new game list ⚠️".yellow.bgBlack);
 
-      const session = await gameModel.startSession();
-      session.startTransaction();
+      const bulkOps: AnyBulkWriteOperation<Game>[] = games.map((game) => ({
+        updateOne: {
+          filter: { name: game.name },
+          update: { $set: game },
+          upsert: true,
+        },
+      }));
 
-      try {
-        const bulkOps: AnyBulkWriteOperation<Game>[] = games.map((game) => ({
-          updateOne: {
-            filter: { name: game.name },
-            update: { $set: game },
-            upsert: true,
-          },
-        }));
+      await gameModel.bulkWrite(bulkOps);
 
-        await gameModel.bulkWrite(bulkOps, { session });
-
-        await session.commitTransaction();
-
-        console.log("Updated game listing ✅".green.bgBlack);
-      } catch (error) {
-        await session.abortTransaction();
-        
-        throw error;
-      } finally {
-        session.endSession();
-      }
+      console.log("Updated game listing ✅".green.bgBlack);
     } else {
       console.log("Nothing to update ⚠️".yellow.bgBlack);
     }

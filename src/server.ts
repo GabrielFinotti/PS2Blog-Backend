@@ -3,8 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 export * from "colors";
 import mongoConfig from "./db/mongoConfig";
-import { routers } from "./routers/routers";
 import firebaseConfig from "./db/firebaseConfig";
+import { routers } from "./routers/routers";
 
 dotenv.config({ path: "./src/env/.env" });
 const app = express();
