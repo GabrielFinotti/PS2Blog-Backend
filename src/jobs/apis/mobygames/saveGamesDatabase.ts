@@ -22,9 +22,11 @@ export const saveGameToDatabase = async (games: Partial<Game>[]) => {
         await gameModel.bulkWrite(bulkOps, { session });
 
         await session.commitTransaction();
+
         console.log("Updated game listing ✅".green.bgBlack);
       } catch (error) {
         await session.abortTransaction();
+        
         throw error;
       } finally {
         session.endSession();
