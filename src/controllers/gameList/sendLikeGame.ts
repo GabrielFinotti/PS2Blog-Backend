@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { gameModel } from "../../models/gameModel";
+import { createLike } from "../../utils/gameList/createLike";
 
 export const sendLikeGame = async (req: Request, res: Response) => {
   try {
@@ -12,30 +13,17 @@ export const sendLikeGame = async (req: Request, res: Response) => {
       return res.status(404).send({ message: "Game not found!" });
     }
 
-    const alreadyLiked = await gameModel.findOne({
-      _id: game._id,
-      "likes.users.userId": userId,
-    });
+    const result = await createLike(gameId, userId, game);
 
-    if (alreadyLiked) {
-      return res
-        .status(409)
-        .send({ message: "You have already liked this game!" });
-    }
-
-    await game.updateOne({
-      $addToSet: { "likes.users": { userId } },
-      $inc: { "likes.totalLikes": +1 },
-    });
-
-    return res.status(201).send({ message: "You liked this game!!" });
+    return res.status(result.status).send({ message: result.message });
   } catch (error) {
     console.log(
       `Error when trying to enjoy the game! Error: ${error}`.red.bgBlack
     );
 
     return res.status(500).send({
-      message: "Error when trying to enjoy the game!",
+      message:
+        "An error occurred while trying to enjoy this game, please try again later!",
     });
   }
 };
