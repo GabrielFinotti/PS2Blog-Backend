@@ -1,5 +1,5 @@
-import { GameFilter } from "../../interfaces/gameFilter";
-import { gameModel } from "../../models/gameModel";
+import { GameFilter } from "../../../interfaces/gameFilter";
+import { gameModel } from "../../../models/gameModel";
 
 export const defaultGameFilter = async (param: GameFilter) => {
   try {

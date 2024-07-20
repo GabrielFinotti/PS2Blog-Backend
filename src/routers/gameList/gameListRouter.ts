@@ -25,5 +25,8 @@ gameList.delete(
   authenticate,
   controllers.deleteGameLike
 );
-gameList.delete("/games/deleteComment/:gameId", authenticate),
-  controllers.deleteGameComment;
+gameList.delete(
+  "/games/deleteComment/:gameId",
+  authenticate,
+  controllers.deleteGameComment
+);

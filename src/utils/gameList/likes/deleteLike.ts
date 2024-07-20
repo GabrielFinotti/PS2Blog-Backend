@@ -1,6 +1,6 @@
 import { AnyBulkWriteOperation } from "mongoose";
-import { gameModel } from "../../models/gameModel";
-import { Game } from "../../interfaces/game";
+import { gameModel } from "../../../models/gameModel";
+import { Game } from "../../../interfaces/game";
 
 export const deleteLike = async (
   userId: string,

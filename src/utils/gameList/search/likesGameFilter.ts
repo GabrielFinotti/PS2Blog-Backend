@@ -1,4 +1,4 @@
-import { gameModel } from "../../models/gameModel";
+import { gameModel } from "../../../models/gameModel";
 
 export const likesGameFilter = async () => {
   try {

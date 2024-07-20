@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ratingGameFilter } from "../../utils/gameList/ratingGameFilter";
+import { ratingGameFilter } from "../../utils/gameList/search/ratingGameFilter";
 import { readGameListCache } from "../../utils/cache/gameList/readGameListCache";
 
 export const ratingGameSearch = async (req: Request, res: Response) => {

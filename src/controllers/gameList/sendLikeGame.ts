@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { gameModel } from "../../models/gameModel";
-import { createLike } from "../../utils/gameList/createLike";
+import { createLike } from "../../utils/gameList/likes/createLike";
 
 export const sendLikeGame = async (req: Request, res: Response) => {
   try {

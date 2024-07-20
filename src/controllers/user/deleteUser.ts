@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { findUserById } from "../../utils/user/userValidations";
-import { deleteLike } from "../../utils/gameList/deleteLike";
-import { deleteComment } from "../../utils/gameList/deleteComment";
+import { deleteLike } from "../../utils/gameList/likes/deleteLike";
+import { deleteComment } from "../../utils/gameList/comments/deleteComment";
 
 export const deleteUser = async (req: Request, res: Response) => {
   try {

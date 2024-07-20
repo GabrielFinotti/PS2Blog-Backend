@@ -1,5 +1,5 @@
 import { readGameListCache } from "../../utils/cache/gameList/readGameListCache";
-import { categoriesAndYearsFilter } from "./../../utils/gameList/categoriesAndYearsFilter";
+import { categoriesAndYearsFilter } from "./../../utils/gameList/search/categoriesAndYearsFilter";
 import { Request, Response } from "express";
 
 export const gameCategoriesAndYears = async (req: Request, res: Response) => {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { gameModel } from "../../models/gameModel";
-import { createComment } from "../../utils/gameList/createComment";
+import { createComment } from "../../utils/gameList/comments/createComment";
 
 export const sendCommentGame = async (req: Request, res: Response) => {
   try {

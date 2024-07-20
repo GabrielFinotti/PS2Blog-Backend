@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { GameFilter } from "../../interfaces/gameFilter";
-import { defaultGameFilter } from "../../utils/gameList/defaultGameFilter";
+import { defaultGameFilter } from "../../utils/gameList/search/defaultGameFilter";
 import { filterCachedGames } from "../../utils/cache/gameList/filterCachedGames";
 import { readGameListCache } from "../../utils/cache/gameList/readGameListCache";
 

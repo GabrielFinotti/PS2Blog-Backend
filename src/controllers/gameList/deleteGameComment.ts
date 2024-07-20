@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { gameModel } from "../../models/gameModel";
-import { deleteComment } from "../../utils/gameList/deleteComment";
+import { deleteComment } from "../../utils/gameList/comments/deleteComment";
 
 export const deleteGameComment = async (req: Request, res: Response) => {
   try {
