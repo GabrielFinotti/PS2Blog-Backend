@@ -146,7 +146,7 @@ export const dataUpdate = async (
   return messages;
 };
 
-export const getData = async (id: string) => {
+export const getUserData = async (id: string) => {
   try {
     let user = await userModel.findById(id, { password: false }).populate({
       path: "likedGames.games.gameId",

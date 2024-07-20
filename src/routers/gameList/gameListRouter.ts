@@ -12,6 +12,7 @@ gameList.get(
   authenticate,
   controllers.gameCategoriesAndYears
 );
+gameList.get("/games/data/:gameId", authenticate, controllers.gameData);
 
 gameList.put("/games/sendLike/:gameId", authenticate, controllers.sendLikeGame);
 gameList.put(
@@ -30,3 +31,9 @@ gameList.delete(
   authenticate,
   controllers.deleteGameComment
 );
+
+// Black M
+//66946aff21a703561254cdec
+
+//Black
+//66946aff21a703561254ce1a

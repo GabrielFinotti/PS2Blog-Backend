@@ -13,18 +13,20 @@ export const deleteGameComment = async (req: Request, res: Response) => {
       return res.status(404).send({ message: "Game not found!" });
     }
 
-    await deleteComment(userId, gameId);
+    const result = await deleteComment(userId, gameId);
 
-    return res.sendStatus(204);
+    if (result) {
+      return res.status(result.status).send({ message: result.message });
+    } else {
+      return res.sendStatus(204);
+    }
   } catch (error) {
     console.log(
       `Error when trying to delete game comment. Error: ${error}`.red.bgBlack
     );
 
-    return res
-      .status(500)
-      .send({
-        message: "Error trying to delete comment, please try again later!",
-      });
+    return res.status(500).send({
+      message: "Error trying to delete comment, please try again later!",
+    });
   }
 };

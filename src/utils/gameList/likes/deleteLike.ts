@@ -8,10 +8,21 @@ export const deleteLike = async (
 ) => {
   try {
     if (gameId) {
-      await gameModel.findByIdAndUpdate(gameId, {
-        $pull: { "likes.users": { userId } },
-        $inc: { "likes.totalLikes": -1 },
+      const alreadyLiked = await gameModel.findOne({
+        _id: gameId,
+        "likes.users.userId": userId,
       });
+
+      if (alreadyLiked) {
+        await alreadyLiked.updateOne({
+          $pull: { "likes.users": { userId } },
+          $inc: { "likes.totalLikes": -1 },
+        });
+
+        return { message: "Like deleted", status: 200 };
+      } else {
+        return { message: "You still haven't liked this game!", status: 403 };
+      }
     } else {
       let bulkOps: AnyBulkWriteOperation<Game>[] = [
         {

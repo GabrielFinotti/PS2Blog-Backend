@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findUserById, getData } from "../../utils/user/userValidations";
+import { findUserById, getUserData } from "../../utils/user/userValidations";
 
 export const userData = async (req: Request, res: Response) => {
   try {
@@ -9,7 +9,7 @@ export const userData = async (req: Request, res: Response) => {
       return res.status(404).send({ message: "No saves found!" });
     }
 
-    const userData = await getData(req.params.id);
+    const userData = await getUserData(req.params.id);
 
     return res.status(200).send(userData);
   } catch (error) {

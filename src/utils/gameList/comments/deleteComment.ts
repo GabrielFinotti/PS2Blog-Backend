@@ -8,9 +8,21 @@ export const deleteComment = async (
 ) => {
   try {
     if (gameId) {
-      await gameModel.findByIdAndUpdate(gameId, {
-        $pull: { comments: { userId } },
+      const alreadyComment = await gameModel.findOne({
+        _id: gameId,
+        "comments.userId": userId,
       });
+
+      if (alreadyComment) {
+        await alreadyComment.updateOne({ $pull: { comments: { userId } } });
+
+        return { message: "Comment deleted", status: 200 };
+      } else {
+        return {
+          message: "You haven't commented on this game yet!",
+          status: 403,
+        };
+      }
     } else {
       const bulkOps: AnyBulkWriteOperation<Game>[] = [
         {

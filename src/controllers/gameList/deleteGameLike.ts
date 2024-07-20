@@ -13,9 +13,13 @@ export const deleteGameLike = async (req: Request, res: Response) => {
       return res.status(404).send({ message: "Game not found!" });
     }
 
-    await deleteLike(userId, gameId);
+    const result = await deleteLike(userId, gameId);
 
-    return res.sendStatus(204);
+    if (result) {
+      return res.status(result.status).send({ message: result.message });
+    } else {
+      return res.sendStatus(204);
+    }
   } catch (error) {
     console.log(`Error when trying to delete the game like. Error: ${error}`);
 
