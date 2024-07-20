@@ -9,32 +9,17 @@ export const deleteLike = async (
   try {
     if (gameId) {
       await gameModel.findByIdAndUpdate(gameId, {
-        $pull: { likes: { users: { userId } } },
-      });
-
-      await gameModel.findByIdAndUpdate(gameId, {
-        $inc: { totalLikes: -1 },
+        $pull: { "likes.users.userId": userId },
+        $inc: { "likes.totalLikes": -1 },
       });
     } else {
       let bulkOps: AnyBulkWriteOperation<Game>[] = [
         {
           updateMany: {
-            filter: { likes: { users: { userId } } },
+            filter: { "likes.users.userId": userId },
             update: {
-              $pull: { likes: { users: { userId } } },
-            },
-          },
-        },
-      ];
-
-      await gameModel.bulkWrite(bulkOps);
-
-      bulkOps = [
-        {
-          updateMany: {
-            filter: { likes: { users: { userId } } },
-            update: {
-              $inc: { totalLikes: -1 },
+              $pull: { "likes.users.userId": userId },
+              $inc: { "likes.totalLikes": -1 },
             },
           },
         },

@@ -9,14 +9,14 @@ export const deleteComment = async (
   try {
     if (gameId) {
       await gameModel.findByIdAndUpdate(gameId, {
-        $pull: { comments: { userId } },
+        $pull: { "comments.userId": userId },
       });
     } else {
       const bulkOps: AnyBulkWriteOperation<Game>[] = [
         {
           updateMany: {
-            filter: { comments: { userId } },
-            update: { $pull: { comments: { userId } } },
+            filter: { "comments.userId": userId },
+            update: { $pull: { "comments.userId": userId } },
           },
         },
       ];
