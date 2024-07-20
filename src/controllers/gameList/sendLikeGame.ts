@@ -25,7 +25,7 @@ export const sendLikeGame = async (req: Request, res: Response) => {
 
     await game.updateOne({
       $addToSet: { "likes.users": { userId } },
-      $inc: { "likes.totalLikes": 1 },
+      $inc: { "likes.totalLikes": +1 },
     });
 
     return res.status(201).send({ message: "You liked this game!!" });
@@ -39,7 +39,3 @@ export const sendLikeGame = async (req: Request, res: Response) => {
     });
   }
 };
-
-//Excluir likes desses jogos!
-//66946aff21a703561254cdec
-//66946aff21a703561254ce1a

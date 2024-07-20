@@ -9,7 +9,7 @@ export const deleteLike = async (
   try {
     if (gameId) {
       await gameModel.findByIdAndUpdate(gameId, {
-        $pull: { "likes.users.userId": userId },
+        $pull: { "likes.users": { userId } },
         $inc: { "likes.totalLikes": -1 },
       });
     } else {
@@ -18,7 +18,7 @@ export const deleteLike = async (
           updateMany: {
             filter: { "likes.users.userId": userId },
             update: {
-              $pull: { "likes.users.userId": userId },
+              $pull: { "likes.users": { userId } },
               $inc: { "likes.totalLikes": -1 },
             },
           },
