@@ -148,10 +148,9 @@ export const dataUpdate = async (
 
 export const getUserData = async (id: string) => {
   try {
-    let user = await userModel.findById(id, { password: false }).populate({
-      path: "likedGames.games.gameId",
-      select: "image name category",
-    });
+    let user = await userModel
+      .findById(id, { password: false })
+      .populate("likedGames.games.gameId", "image name");
 
     if (user) {
       user = user.toObject();

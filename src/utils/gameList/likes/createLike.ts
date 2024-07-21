@@ -1,6 +1,7 @@
 import { Document } from "mongoose";
 import { gameModel } from "../../../models/gameModel";
 import { Game } from "../../../interfaces/game";
+import { userModel } from "../../../models/userModel";
 
 export const createLike = async (
   gameId: string,
@@ -16,6 +17,11 @@ export const createLike = async (
     if (alreadyLiked) {
       return { message: "You have already liked this game!", status: 409 };
     }
+
+    await userModel.findByIdAndUpdate(userId, {
+      $addToSet: { "likedGames.games": { gameId } },
+      $inc: { "likedGames.totalLikes": +1 },
+    });
 
     await game.updateOne({
       $addToSet: { "likes.users": { userId } },

@@ -13,13 +13,15 @@ export const gameData = async (req: Request, res: Response) => {
       });
     }
 
-    const game = await gameModel.findById(gameId);
+    const game = await gameModel
+      .findById(gameId)
+      .populate("comments.userId", "username image");
 
     if (!game) {
       return res.status(404).send({ message: "Game not found!" });
     }
 
-    return res.status(200).send(game);
+    return res.status(200).send(game.toObject());
   } catch (error) {
     console.log(`Error recovering game data. Error: ${error}`);
 

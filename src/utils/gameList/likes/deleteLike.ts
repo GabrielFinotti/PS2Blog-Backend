@@ -1,6 +1,7 @@
 import { AnyBulkWriteOperation } from "mongoose";
 import { gameModel } from "../../../models/gameModel";
 import { Game } from "../../../interfaces/game";
+import { userModel } from "../../../models/userModel";
 
 export const deleteLike = async (
   userId: string,
@@ -14,6 +15,11 @@ export const deleteLike = async (
       });
 
       if (alreadyLiked) {
+        await userModel.findByIdAndUpdate(userId, {
+          $pull: { "likedGames.games": { gameId } },
+          $inc: { "likedGames.totalLikes": -1 },
+        });
+
         await alreadyLiked.updateOne({
           $pull: { "likes.users": { userId } },
           $inc: { "likes.totalLikes": -1 },
