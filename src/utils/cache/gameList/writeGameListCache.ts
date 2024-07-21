@@ -1,8 +1,8 @@
 import * as fs from "fs-extra";
-import { defaultGameFilter } from "../../gameList/defaultGameFilter";
-import { likesGameFilter } from "../../gameList/likesGameFilter";
-import { categoriesAndYearsFilter } from "../../gameList/categoriesAndYearsFilter";
-import { ratingGameFilter } from "../../gameList/ratingGameFilter";
+import { categoriesAndYearsFilter } from "../../gameList/search/categoriesAndYearsFilter";
+import { defaultGameFilter } from "../../gameList/search/defaultGameFilter";
+import { likesGameFilter } from "../../gameList/search/likesGameFilter";
+import { ratingGameFilter } from "../../gameList/search/ratingGameFilter";
 
 export const writeGameListCache = async () => {
   try {
@@ -31,9 +31,6 @@ export const writeGameListCache = async () => {
 
     console.log("Curling completed ✅".green.bgBlack);
   } catch (error) {
-    console.log(
-      "An error occurred when trying to create the game list cache❗".red
-        .bgBlack
-    );
+    throw error;
   }
 };

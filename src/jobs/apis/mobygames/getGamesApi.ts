@@ -6,6 +6,7 @@ import { sleep } from "../../../utils/temp/sleep";
 import { saveGameToDatabase } from "./saveGamesDatabase";
 
 let gameList: Partial<Game>[] = [];
+let countError: number = 0;
 
 export const getGamesApi = async (offset: number = 0, count: number = 1) => {
   try {
@@ -45,13 +46,19 @@ export const getGamesApi = async (offset: number = 0, count: number = 1) => {
     await saveGameToDatabase(gameList);
 
     gameList = [];
+    countError += 1;
 
     await sleep(60000);
 
     console.log(
-      `Restarting the search for games in the call ${count} ⚠️`.yellow.bgBlack
+      `Restarting the search for games in the call ${count}. Errors occurred: ${countError} ⚠️`
+        .yellow.bgBlack
     );
 
-    await getGamesApi(offset, count);
+    if (countError <= 6) {
+      await getGamesApi(offset, count);
+    } else {
+      throw error;
+    }
   }
 };

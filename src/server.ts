@@ -3,8 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 export * from "colors";
 import mongoConfig from "./db/mongoConfig";
-import firebaseConfig from "./db/firebaseConfig";
+// import firebaseConfig from "./db/firebaseConfig";
 import { routers } from "./routers/routers";
+import { gameListUpdate } from "./jobs/cron/gameListUpdate";
+import { createGameListCache } from "./jobs/cron/cacheWrite";
 
 dotenv.config({ path: "./src/env/.env" });
 const app = express();
@@ -24,7 +26,10 @@ app.listen(process.env.PORT, async () => {
 
     app.use("/", routers.userRouter, routers.gameList);
 
-    await firebaseConfig();
+    // await firebaseConfig();
+
+    createGameListCache.start();
+    gameListUpdate.start();
   } catch (error) {
     console.log(`Connection fail, error: ${error}`.red.bgBlack);
   }
