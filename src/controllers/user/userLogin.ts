@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
 import { newJwtLogin } from "../../utils/auth/jwtGenerate";
-import {
-  dataLogin,
-  findUserByEmail,
-  verifyHasPass,
-} from "../../utils/user/userValidations";
+import { dataLogin } from "../../utils/user/login/dataLogin";
+import { findUserByEmail } from "../../utils/user/search/findUserByEmail";
+import { verifyHashPass } from "../../utils/auth/verifyHashPass";
 
 export const userLogin = async (req: Request, res: Response) => {
   try {
@@ -21,7 +19,7 @@ export const userLogin = async (req: Request, res: Response) => {
       return res.status(404).send({ message: "No saves found!" });
     }
 
-    const validationPass = await verifyHasPass(
+    const validationPass = await verifyHashPass(
       req.body.password,
       findUser.password
     );

@@ -1,49 +1,9 @@
-import bcrypt from "bcrypt";
-import { User } from "../../interfaces/user";
-import { userModel } from "../../models/userModel";
 import { Document } from "mongoose";
-
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-export const dataRegister = async (data: User) => {
-  const { username, email, password } = data;
-
-  if (!username || !email || !password) {
-    return { message: "No field can be empty!" };
-  } else if (!emailRegex.test(email)) {
-    return { message: "Enter a valid email!" };
-  }
-
-  if (username != username.trim() || password != password.trim()) {
-    return { message: "Fields cannot begin or end with spaces!" };
-  }
-
-  if (username.length < 6 || username.length > 16) {
-    return {
-      message:
-        "Username must be a minimum of 6 and a maximum of 16 characters!",
-    };
-  } else if (password.length < 8 || password.length > 20) {
-    return {
-      message:
-        "Password must be a minimum of 8 and a maximum of 20 characters!",
-    };
-  }
-
-  return true;
-};
-
-export const dataLogin = async (data: User) => {
-  const { email, password } = data;
-
-  if (!email || !password) {
-    return { message: "No field can be empty!" };
-  } else if (!emailRegex.test(email)) {
-    return { message: "Enter a valid email!" };
-  }
-
-  return true;
-};
+import { User } from "../../../interfaces/user";
+import { emailRegex } from "../../auth/emailRegex";
+import { hashPass } from "../../auth/hashPass";
+import { findUserByEmail } from "../search/findUserByEmail";
+import { verifyHashPass } from "../../auth/verifyHashPass";
 
 export const dataUpdate = async (
   data: Partial<User>,
@@ -75,7 +35,7 @@ export const dataUpdate = async (
         "Please enter your current password to create a new password."
       );
     } else {
-      const isPass = await verifyHasPass(currentPass, user.password);
+      const isPass = await verifyHashPass(currentPass, user.password);
 
       if (data.password.length < 8 || data.password.length > 20) {
         messages.push(
@@ -144,48 +104,4 @@ export const dataUpdate = async (
   }
 
   return messages;
-};
-
-export const getUserData = async (id: string) => {
-  try {
-    let user = await userModel
-      .findById(id, { password: false })
-      .populate("likedGames.games.gameId", "image name");
-
-    if (user) {
-      user = user.toObject();
-    }
-
-    return user;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const findUserByEmail = async (email: string) => {
-  const user = await userModel.findOne({ email });
-
-  if (!user) return false;
-
-  return user;
-};
-
-export const findUserById = async (id: string) => {
-  const user = await userModel.findById(id);
-
-  if (!user) return false;
-
-  return user;
-};
-
-export const hashPass = async (pass: string) => {
-  const password = await bcrypt.hash(pass, 10);
-
-  return password;
-};
-
-export const verifyHasPass = async (pass: string, userSavePass: string) => {
-  const isPass = await bcrypt.compare(pass, userSavePass);
-
-  return isPass;
 };

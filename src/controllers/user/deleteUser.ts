@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findUserById } from "../../utils/user/userValidations";
+import { findUserById } from "../../utils/user/search/findUserById";
 import { deleteLike } from "../../utils/gameList/likes/deleteLike";
 import { deleteComment } from "../../utils/gameList/comments/deleteComment";
 

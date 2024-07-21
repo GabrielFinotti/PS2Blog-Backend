@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { dataUpdate, findUserById } from "../../utils/user/userValidations";
+import { dataUpdate } from "../../utils/user/update/dataUpdate";
+import { findUserById } from "../../utils/user/search/findUserById";
 
 export const userUpdate = async (req: Request, res: Response) => {
   try {

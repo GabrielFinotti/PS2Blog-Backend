@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
-import {
-  dataRegister,
-  findUserByEmail,
-  hashPass,
-} from "../../utils/user/userValidations";
+import { dataRegister } from "../../utils/user/register/dataRegister";
 import { userModel } from "../../models/userModel";
+import { hashPass } from "../../utils/auth/hashPass";
+import { findUserByEmail } from "../../utils/user/search/findUserByEmail";
 
 export const userRegister = async (req: Request, res: Response) => {
   try {
