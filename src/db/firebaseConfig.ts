@@ -1,19 +1,15 @@
-import * as admin from "firebase-admin";
-import fs from "fs-extra";
+import { initializeApp } from "firebase/app";
+import dotenv from "dotenv";
 
-export default async () => {
-  try {
-    console.log("Establishing connection to firebase ⚠️".yellow.bgBlack);
+dotenv.config({ path: "./src/env/.env" });
 
-    const serviceAccount = await fs.readJSON("./src/secret/firebase.json");
-
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-      storageBucket: "ps2-blog-cloud.appspot.com",
-    });
-
-    console.log("Firebase instance started ✅".cyan.bgBlack);
-  } catch (error) {
-    console.log(`Error starting firebase: ${error}`.red.bgBlack);
-  }
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_KEY,
+  authDomain: process.env.FIREBASE_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGE,
+  appId: process.env.FIREBASE_AP_ID,
 };
+
+export default async () => initializeApp(firebaseConfig);

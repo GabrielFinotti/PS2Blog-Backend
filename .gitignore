@@ -2,8 +2,6 @@
 node_modules
 dist
 logs
-secret
-src/cache
 
 # Files
 .env

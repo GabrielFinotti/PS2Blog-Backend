@@ -5,9 +5,9 @@ const userSchema: Schema<User> = new Schema<User>(
   {
     username: {
       type: String,
-      min: 6,
-      max: 16,
       required: true,
+      min: 5,
+      max: 16,
     },
     email: {
       type: String,
@@ -17,37 +17,20 @@ const userSchema: Schema<User> = new Schema<User>(
     password: {
       type: String,
       required: true,
+      min: 8,
+      max: 20,
     },
     bio: {
       type: String,
-      max: 500,
+      required: false,
       default:
         "Who are you? How did you get here? We look forward to hearing your story!",
-      required: false,
+      max: 500,
     },
     image: {
       type: String,
-      default: "",
       required: false,
-    },
-    likedGames: {
-      type: {
-        totalLikes: Number,
-        games: {
-          type: [
-            {
-              gameId: {
-                type: Schema.Types.ObjectId,
-                ref: "Game",
-              },
-            },
-          ],
-          _id: false,
-        },
-      },
-      default: { totalLikes: 0, games: [] },
-      _id: false,
-      required: false,
+      default: undefined,
     },
   },
   { timestamps: true }

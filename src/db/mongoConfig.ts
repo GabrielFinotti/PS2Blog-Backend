@@ -4,13 +4,12 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./src/env/.env" });
 
 export default async () => {
-  try {
-    console.log("Establishing connection to the database ⚠️".yellow.bgBlack);
-
-    await mongoose.connect(process.env.DB_URL, { dbName: process.env.DB_NAME });
-
-    console.log("Connected Database ✅".cyan.bgBlack);
-  } catch (error) {
-    throw error;
-  }
+  await mongoose
+    .connect(process.env.DB_URL, { dbName: process.env.DB_NAME })
+    .then(() => {
+      console.log("Connected Database!".cyan);
+    })
+    .catch((error) => {
+      console.log(`Error: ${error}`.red.bgBlack);
+    });
 };
