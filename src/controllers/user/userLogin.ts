@@ -1,30 +1,48 @@
 import { Request, Response } from "express";
-import { userDataLogin } from "../../utils/userValidations";
-import { newJwtLogin } from "../../utils/jwtGenerate";
+import { newJwtLogin } from "../../utils/auth/jwtGenerate";
+import { dataLogin } from "../../utils/user/login/dataLogin";
+import { findUserByEmail } from "../../utils/user/search/findUserByEmail";
+import { verifyHashPass } from "../../utils/auth/verifyHashPass";
 
 export const userLogin = async (req: Request, res: Response) => {
   try {
-    const saveProfile: boolean = req.body.save;
-    const { message, status, existingUser } = await userDataLogin(req.body);
+    const validationResult = await dataLogin(req.body);
+    const isSaveData = req.body.isSaveData as boolean;
 
-    if (status != 200) {
-      return res.status(status).send({ message: message });
+    if (typeof validationResult === "object") {
+      return res.status(400).json(validationResult);
     }
 
-    const getUserLoginToken = await newJwtLogin(existingUser?.id, saveProfile);
+    const findUser = await findUserByEmail(req.body.email);
 
-    if (!getUserLoginToken.token) {
-      return res.status(500).send({ message: getUserLoginToken.message });
+    if (!findUser) {
+      return res.status(404).send({ message: "No saves found!" });
     }
 
-    res.status(status).json({
-      message: message,
-      username: existingUser?.username,
-      token: getUserLoginToken.token,
+    const validationPass = await verifyHashPass(
+      req.body.password,
+      findUser.password
+    );
+
+    if (!validationPass) {
+      return res
+        .status(403)
+        .send({ message: "Incorrect data, check and try again!" });
+    }
+
+    const token = await newJwtLogin(findUser.id, isSaveData);
+
+    if (!token.token) {
+      return res.status(500).json(token.message);
+    }
+
+    return res.status(200).send({
+      message: "Save loaded successfully, good play!",
+      token: token.token,
     });
   } catch (error) {
     console.log(`Error: ${error}`.red.bgBlack);
 
-    res.sendStatus(500);
+    return res.sendStatus(500);
   }
 };
