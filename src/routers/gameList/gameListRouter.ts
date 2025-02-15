@@ -31,9 +31,3 @@ gameList.delete(
   authenticate,
   controllers.deleteGameComment
 );
-
-// Black M
-//66946aff21a703561254cdec
-
-//Black
-//66946aff21a703561254ce1a
