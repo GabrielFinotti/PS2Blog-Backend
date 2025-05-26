@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 export * from "colors";
 import mongoConfig from "./db/mongoConfig";
-// import firebaseConfig from "./db/firebaseConfig";
 import { routers } from "./routers/routers";
 import { gameListUpdate } from "./jobs/cron/gameListUpdate";
 import { createGameListCache } from "./jobs/cron/cacheWrite";
@@ -25,8 +24,6 @@ app.listen(process.env.PORT, async () => {
     await mongoConfig();
 
     app.use("/", routers.userRouter, routers.gameList);
-
-    // await firebaseConfig();
 
     createGameListCache.start();
     gameListUpdate.start();
