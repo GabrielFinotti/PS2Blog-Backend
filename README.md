@@ -1,213 +1,175 @@
-# 🎮 PS2Blog-Backend
+<div align="center">
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
-![License](https://img.shields.io/badge/license-ISC-green.svg)
-![Node](https://img.shields.io/badge/node-v14%2B-brightgreen.svg)
+# 🎮 PS2Blog Backend API
 
-API RESTful para gerenciamento de um catálogo de jogos de PlayStation 2, com funcionalidades de autenticação, listagem, filtragem, comentários e sistema de curtidas.
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg?style=flat-square)](https://github.com/GabrielHFinotti/PS2Blog-Backend)
+[![License](https://img.shields.io/badge/license-ISC-green.svg?style=flat-square)](LICENSE)
+[![Node.js](https://img.shields.io/badge/node.js-18.x-brightgreen.svg?style=flat-square)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-5.4.5-blue.svg?style=flat-square)](https://www.typescriptlang.org/)
+[![MongoDB](https://img.shields.io/badge/mongodb-latest-green.svg?style=flat-square)](https://www.mongodb.com/)
+[![Express](https://img.shields.io/badge/express-4.19.2-lightgrey.svg?style=flat-square)](https://expressjs.com/)
+
+*API RESTful moderna para gerenciamento de catálogo de jogos PlayStation 2*
+
+[🚀 Início Rápido](#-início-rápido) • [📖 Documentação](#-documentação-da-api) • [🛠️ Tecnologias](#️-stack-tecnológica) • [🤝 Contribuição](#-contribuição)
+
+</div>
+
+---
 
 ## 📋 Sobre o Projeto
 
-PS2Blog-Backend é uma API RESTful desenvolvida para servir como backend para uma aplicação de blog/catálogo dedicada a jogos de PlayStation 2. A API se integra com o serviço MobyGames para obter informações detalhadas sobre jogos e oferece um conjunto abrangente de funcionalidades para gerenciamento de usuários, comentários e interações.
+PS2Blog Backend é uma **API RESTful robusta** desenvolvida em TypeScript que serve como backend para uma plataforma de catálogo e comunidade dedicada aos jogos clássicos do PlayStation 2.
 
-O sistema possui mecanismos automatizados para atualização periódica do catálogo de jogos e implementa estratégias de cache para melhorar a performance e reduzir a carga no banco de dados.
+### ✨ Principais Funcionalidades
 
-## 🚀 Principais Recursos
+- 🔐 **Autenticação JWT** com middleware de segurança
+- 👥 **Gerenciamento de usuários** com perfis personalizáveis
+- 🎮 **Catálogo completo** com mais de 2000+ jogos PS2
+- 💬 **Sistema social** com comentários e likes
+- 🔍 **Busca avançada** por nome, categoria e ano
+- ⚡ **Cache inteligente** para performance otimizada
+- 🤖 **Automação** com jobs cron para atualizações
+- 🌐 **Integração** com API MobyGames
 
-- **Sistema de Autenticação**
+## 🛠️ Stack Tecnológica
 
-  - Registro de novos usuários com validação de dados
-  - Login com geração de tokens JWT
-  - Opção de persistência de sessão (lembrar usuário)
-  - Middleware de proteção de rotas
+### Core
 
-- **Gerenciamento de Usuários**
-
-  - Perfis de usuário personalizáveis
-  - Gerenciamento de informações pessoais
-  - Histórico de curtidas em jogos
-
-- **Catálogo de Jogos**
-
-  - Listagem completa com paginação
-  - Busca e filtragem por nome, categoria e ano
-  - Detalhes completos de cada jogo
-
-- **Interação com Jogos**
-
-  - Sistema de curtidas
-  - Sistema de comentários
-  - Contagem de popularidade
-
-- **Otimização de Performance**
-
-  - Sistema de cache para consultas frequentes
-  - Atualização periódica de dados em segundo plano
-
-- **Integração Externa**
-  - API MobyGames para obtenção de dados de jogos
-  - Suporte opcional para Firebase Storage
-
-## 🛠️ Tecnologias Utilizadas
-
-### Backend e Infraestrutura
-
-- **[Node.js](https://nodejs.org/)** - Ambiente de execução JavaScript
-- **[TypeScript](https://www.typescriptlang.org/)** - Superset tipado de JavaScript
-- **[Express](https://expressjs.com/)** - Framework web para Node.js
-- **[MongoDB](https://www.mongodb.com/)** - Banco de dados NoSQL
-- **[Mongoose](https://mongoosejs.com/)** - ODM (Object Data Modeling) para MongoDB
-
-### Autenticação e Segurança
-
-- **[JWT (JSON Web Tokens)](https://jwt.io/)** - Método seguro para autenticação
-- **[bcrypt](https://www.npmjs.com/package/bcrypt)** - Criptografia de senhas
-
-### Integração e Serviços
-
-- **[Firebase Admin](https://firebase.google.com/docs/admin/setup)** - Serviços do Firebase (opcional)
-- **[Axios](https://axios-http.com/)** - Cliente HTTP para requisições externas
-- **[async-retry](https://www.npmjs.com/package/async-retry)** - Biblioteca para retry de operações
-
-### Utilitários e Ferramentas
-
-- **[node-cron](https://www.npmjs.com/package/node-cron)** - Agendamento de tarefas
-- **[fs-extra](https://www.npmjs.com/package/fs-extra)** - Extensão para manipulação de arquivos
-- **[dotenv](https://www.npmjs.com/package/dotenv)** - Gerenciamento de variáveis de ambiente
-- **[cors](https://www.npmjs.com/package/cors)** - Middleware para habilitar CORS
-
-### Desenvolvimento e Testes
-
-- **[tsx](https://www.npmjs.com/package/tsx)** - Executor de TypeScript com suporte a ESM
-- **[tsup](https://www.npmjs.com/package/tsup)** - Bundler TypeScript
-- **[vitest](https://vitest.dev/)** - Framework de testes
-
-## 📦 Estrutura do Projeto
-
-```
-src/
-├── cache/           # Armazenamento de cache
-│   └── gameList/    # Cache da lista de jogos
-├── controllers/     # Controladores da aplicação
-│   ├── gameList/    # Controladores relacionados a jogos
-│   └── user/        # Controladores relacionados a usuários
-├── db/              # Configurações de banco de dados
-├── env/             # Configurações de ambiente
-├── interfaces/      # Definições de tipos TypeScript
-├── jobs/            # Tarefas agendadas
-│   ├── apis/        # Integrações com APIs externas
-│   └── cron/        # Tarefas agendadas com cron
-├── middleware/      # Middlewares da aplicação
-├── models/          # Modelos de dados (Mongoose)
-├── routers/         # Rotas da aplicação
-│   ├── gameList/    # Rotas para gerenciamento de jogos
-│   └── user/        # Rotas para gerenciamento de usuários
-├── secret/          # Arquivos secretos (não versionados)
-├── utils/           # Funções utilitárias
-│   ├── auth/        # Utilitários de autenticação
-│   ├── cache/       # Utilitários de cache
-│   ├── gameList/    # Utilitários para jogos
-│   ├── temp/        # Utilitários temporários
-│   └── user/        # Utilitários para usuários
-└── server.ts        # Ponto de entrada da aplicação
+```bash
+Node.js + TypeScript + Express + MongoDB
 ```
 
-## 🚀 Como Executar
+### Principais Dependências
+
+| Tecnologia | Versão | Propósito |
+|-----------|--------|-----------|
+| **Express** | 4.19.2 | Framework web |
+| **MongoDB** | 8.4.1 | Banco de dados NoSQL |
+| **Mongoose** | 8.4.1 | ODM para MongoDB |
+| **JWT** | 9.0.2 | Autenticação segura |
+| **bcrypt** | 5.1.1 | Criptografia de senhas |
+| **node-cron** | 3.0.3 | Agendamento de tarefas |
+| **axios** | 1.7.2 | Cliente HTTP |
+
+### Ferramentas de Desenvolvimento
+
+- **tsx** - Executor TypeScript com hot-reload
+- **tsup** - Bundler otimizado
+- **vitest** - Framework de testes moderno
+
+## 🚀 Início Rápido
 
 ### Pré-requisitos
 
-- **Node.js** (v14+)
-- **MongoDB** (local ou remoto)
-- **Chave de API do MobyGames** - [Obter aqui](https://www.mobygames.com/info/api/)
-- **(Opcional)** Conta Firebase para armazenamento de arquivos
+- **Node.js** 18+
+- **MongoDB** (local ou Atlas)
+- **API Key MobyGames** ([Obter aqui](https://www.mobygames.com/info/api/))
 
-### Configuração do Ambiente
-
-1. **Clone o repositório:**
-
-   ```bash
-   git clone https://github.com/seu-usuario/PS2Blog-Backend.git
-   cd PS2Blog-Backend
-   ```
-
-2. **Instale as dependências:**
-
-   ```bash
-   npm install
-   ```
-
-3. **Configure as variáveis de ambiente:**
-   Crie um arquivo `.env` na pasta `src/env/` seguindo o modelo:
-
-   ```
-   CLIENT_URL=http://localhost:3000  # URL do front-end para CORS
-   DB_NAME=ps2blog                   # Nome do banco de dados
-   DB_URL=mongodb://localhost:27017  # URL de conexão com MongoDB
-   PORT=5000                         # Porta da aplicação
-   SECRET_KEY=sua_chave_secreta_jwt  # Chave para assinar tokens JWT
-   MOBY_API_KEY=sua_chave_api        # Chave de API do MobyGames
-   ```
-
-4. **(Opcional) Configure o Firebase:**
-   Se desejar utilizar o Firebase para armazenamento, crie o arquivo de configuração em:
-
-   ```
-   src/secret/firebase.json
-   ```
-
-   Siga as instruções do Firebase para obter este arquivo de configuração.
-
-5. **Crie as pastas necessárias:**
-   ```bash
-   mkdir -p src/cache/gameList
-   ```
-
-### Execução
-
-#### Ambiente de Desenvolvimento
+### ⚡ Instalação Rápida
 
 ```bash
+# Clone o repositório
+git clone https://github.com/GabrielHFinotti/PS2Blog-Backend.git
+cd PS2Blog-Backend
+
+# Instale as dependências
+npm install
+
+# Configure o ambiente
+cp .env.example src/env/.env
+# Edite src/env/.env com suas configurações
+
+# Crie pastas necessárias
+mkdir -p src/cache/gameList
+
+# Execute em desenvolvimento
 npm run dev
 ```
 
-Este comando inicia o servidor com hot-reload para desenvolvimento.
+### 🔧 Configuração do Ambiente
 
-#### Produção
+Crie o arquivo `src/env/.env`:
 
-```bash
-# Compilar o projeto
-npm run build
+```env
+# Aplicação
+PORT=5000
+CLIENT_URL=http://localhost:3000
 
-# Iniciar o servidor
-npm start
+# Banco de Dados
+DB_NAME=ps2blog
+DB_URL=mongodb://localhost:27017
+
+# Segurança
+SECRET_KEY=sua_chave_jwt_super_secreta
+
+# APIs Externas
+MOBY_API_KEY=sua_chave_api_mobygames
 ```
 
-#### Testes
+### 📦 Scripts Disponíveis
 
 ```bash
-npm test
+npm run dev     # Desenvolvimento com hot-reload
+npm run build   # Build para produção
+npm start       # Executa versão de produção
+npm test        # Executa testes
 ```
 
-## 📄 API Endpoints
+## 📖 Documentação da API
 
-### Autenticação
+### 🔐 Autenticação
 
-| Método | Endpoint         | Descrição              | Autenticação |
-| ------ | ---------------- | ---------------------- | ------------ |
-| `POST` | `/auth/register` | Registrar novo usuário | Não          |
-| `POST` | `/auth/login`    | Login de usuário       | Não          |
+Todas as rotas protegidas requerem o header:
 
-#### Exemplo de Requisição (Registro)
+```
+Authorization: Bearer <jwt_token>
+```
+
+#### Endpoints de Autenticação
+
+| Método | Endpoint | Descrição | Autenticação |
+|--------|----------|-----------|--------------|
+| `POST` | `/auth/register` | Registro de usuário | ❌ |
+| `POST` | `/auth/login` | Login | ❌ |
+
+<details>
+<summary><strong>POST /auth/register</strong></summary>
+
+**Request Body:**
 
 ```json
 {
-  "username": "user123",
-  "email": "user@example.com",
-  "password": "senha12345"
+  "username": "string (6-16 chars)",
+  "email": "string (valid email)",
+  "password": "string (min 6 chars)"
 }
 ```
 
-#### Exemplo de Resposta (Login)
+**Response (201):**
+
+```json
+{
+  "message": "User registered successfully",
+  "userId": "507f1f77bcf86cd799439011"
+}
+```
+
+</details>
+
+<details>
+<summary><strong>POST /auth/login</strong></summary>
+
+**Request Body:**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "userpassword"
+}
+```
+
+**Response (200):**
 
 ```json
 {
@@ -216,115 +178,160 @@ npm test
 }
 ```
 
-### Usuário
+</details>
 
-| Método   | Endpoint            | Descrição                  | Autenticação |
-| -------- | ------------------- | -------------------------- | ------------ |
-| `GET`    | `/user/data`        | Obter dados do usuário     | Sim          |
-| `PUT`    | `/user/data/update` | Atualizar dados do usuário | Sim          |
-| `DELETE` | `/user/data/delete` | Excluir usuário            | Sim          |
+### 👤 Gerenciamento de Usuários
 
-#### Exemplo de Requisição (Atualização)
+| Método | Endpoint | Descrição | Autenticação |
+|--------|----------|-----------|--------------|
+| `GET` | `/user/data` | Dados do usuário | ✅ |
+| `PUT` | `/user/data/update` | Atualizar perfil | ✅ |
+| `DELETE` | `/user/data/delete` | Deletar conta | ✅ |
+
+<details>
+<summary><strong>GET /user/data</strong></summary>
+
+**Response (200):**
 
 ```json
 {
-  "username": "novo_nome",
-  "bio": "Nova biografia do usuário",
-  "currentPass": "senha_atual",
-  "password": "nova_senha"
+  "_id": "507f1f77bcf86cd799439011",
+  "username": "gamer123",
+  "email": "gamer@example.com",
+  "bio": "Passionate PS2 gamer since 2000!",
+  "image": "https://example.com/avatar.jpg",
+  "likedGames": {
+    "totalLikes": 42,
+    "games": [
+      { "gameId": "507f1f77bcf86cd799439012" }
+    ]
+  },
+  "createdAt": "2024-01-15T10:30:00.000Z"
 }
 ```
 
-### Jogos
+</details>
 
-| Método   | Endpoint                       | Descrição                           | Autenticação |
-| -------- | ------------------------------ | ----------------------------------- | ------------ |
-| `GET`    | `/games`                       | Listar jogos com filtros            | Sim          |
-| `GET`    | `/games/rating`                | Listar jogos por classificação      | Sim          |
-| `GET`    | `/games/likes`                 | Listar jogos por curtidas           | Sim          |
-| `GET`    | `/games/categoriesAndYears`    | Obter categorias e anos disponíveis | Sim          |
-| `GET`    | `/games/data/:gameId`          | Obter dados de um jogo específico   | Sim          |
-| `PUT`    | `/games/sendLike/:gameId`      | Curtir um jogo                      | Sim          |
-| `PUT`    | `/games/sendComment/:gameId`   | Comentar em um jogo                 | Sim          |
-| `DELETE` | `/games/deleteLike/:gameId`    | Remover curtida                     | Sim          |
-| `DELETE` | `/games/deleteComment/:gameId` | Remover comentário                  | Sim          |
+### 🎮 Catálogo de Jogos
 
-#### Exemplo de Requisição (Filtragem de Jogos)
+| Método | Endpoint | Descrição | Query Params |
+|--------|----------|-----------|--------------|
+| `GET` | `/games` | Lista jogos | `name`, `category`, `release`, `limit`, `page` |
+| `GET` | `/games/rating` | Por rating | `limit`, `page` |
+| `GET` | `/games/likes` | Por likes | `limit`, `page` |
+| `GET` | `/games/categoriesAndYears` | Filtros disponíveis | - |
+| `GET` | `/games/data/:gameId` | Dados do jogo | - |
+
+<details>
+<summary><strong>GET /games (Busca com Filtros)</strong></summary>
+
+**Query Parameters:**
+
+- `name` (string): Nome do jogo
+- `category` (string): Categoria do jogo
+- `release` (string): Ano de lançamento
+- `limit` (number): Limite por página (padrão: 20)
+- `page` (number): Página atual (padrão: 1)
+
+**Exemplo:**
 
 ```
 GET /games?name=Final&category=RPG&release=2004&limit=10&page=1
 ```
 
-#### Exemplo de Requisição (Comentário)
+**Response (200):**
 
 ```json
 {
-  "comment": "Este é um ótimo jogo! Recomendo a todos."
+  "games": [
+    {
+      "_id": "507f1f77bcf86cd799439012",
+      "name": "Final Fantasy XII",
+      "release": "2004",
+      "category": "RPG",
+      "rating": 8.5,
+      "image": "https://example.com/ffxii.jpg",
+      "plataforms": [{"name": "PlayStation 2"}],
+      "likes": {
+        "totalLikes": 156,
+        "users": []
+      },
+      "comments": []
+    }
+  ],
+  "pagination": {
+    "currentPage": 1,
+    "totalPages": 5,
+    "totalGames": 47,
+    "hasNext": true,
+    "hasPrev": false
+  }
 }
 ```
 
-## 🔄 Processos Automáticos
+</details>
 
-A aplicação possui dois processos automáticos principais:
+### 💫 Interações Sociais
 
-1. **Atualização do Catálogo de Jogos**
+| Método | Endpoint | Descrição | Autenticação |
+|--------|----------|-----------|--------------|
+| `PUT` | `/games/sendLike/:gameId` | Curtir jogo | ✅ |
+| `PUT` | `/games/sendComment/:gameId` | Comentar | ✅ |
+| `DELETE` | `/games/deleteLike/:gameId` | Remover like | ✅ |
+| `DELETE` | `/games/deleteComment/:gameId` | Remover comentário | ✅ |
 
-   - Execução: A cada 3 meses, no primeiro dia do mês, às 00:00 (América/Recife)
-   - Função: Busca novos jogos na API do MobyGames e atualiza o banco de dados
+<details>
+<summary><strong>PUT /games/sendComment/:gameId</strong></summary>
 
-2. **Geração de Cache**
-   - Execução: A cada mês, no quinto dia, às 00:00 (América/Recife)
-   - Função: Cria um cache da lista de jogos, categorias e anos para melhorar a performance
+**Request Body:**
 
-## 🏗️ Scripts do Projeto
+```json
+{
+  "comment": "Este jogo é incrível! Uma obra-prima do PS2."
+}
+```
 
-| Comando         | Descrição                                                |
-| --------------- | -------------------------------------------------------- |
-| `npm run dev`   | Executa o projeto em modo desenvolvimento com hot-reload |
-| `npm test`      | Executa os testes utilizando o Vitest                    |
-| `npm run build` | Compila o projeto TypeScript para JavaScript             |
-| `npm start`     | Inicia o projeto compilado para ambiente de produção     |
+**Response (200):**
 
-## 🐛 Solução de Problemas
+```json
+{
+  "message": "Comment added successfully",
+  "commentId": "507f1f77bcf86cd799439013"
+}
+```
 
-### Erros Comuns
+</details>
 
-1. **Erro de Conexão com MongoDB**
+## 🏗️ Arquitetura do Projeto
 
-   - Verifique se o MongoDB está em execução
-   - Confirme se a URL de conexão está correta no arquivo `.env`
+```
+src/
+├── 📁 controllers/          # Lógica de negócio
+│   ├── 📁 gameList/        # Controllers de jogos
+│   └── 📁 user/            # Controllers de usuários
+├── 📁 models/              # Schemas Mongoose
+├── 📁 routers/             # Definição de rotas
+├── 📁 middleware/          # Middlewares (auth, cors, etc)
+├── 📁 interfaces/          # Tipos TypeScript
+├── 📁 jobs/                # Automação e jobs
+│   ├── 📁 apis/           # Integrações externas
+│   └── 📁 cron/           # Tarefas agendadas
+├── 📁 utils/               # Funções utilitárias
+├── 📁 cache/               # Sistema de cache
+└── 📄 server.ts           # Entry point
+```
 
-2. **Erro na API do MobyGames**
+## 🤖 Automação e Jobs
 
-   - Verifique se a chave da API é válida
-   - A API tem limite de requisições, verifique se não excedeu o limite
+### 📅 Tarefas Agendadas
 
-3. **Problemas com o Firebase**
-   - Verifique se o arquivo `firebase.json` está configurado corretamente
-   - Confirme se as permissões estão corretas no console do Firebase
+| Job | Frequência | Descrição |
+|-----|------------|-----------|
+| **Game List Update** | Trimestral | Atualiza catálogo via MobyGames API |
+| **Cache Generation** | Mensal | Gera cache otimizado para consultas |
 
-## 📝 Licença
-
-Este projeto está licenciado sob a licença ISC - veja o arquivo LICENSE para detalhes.
-
-## 👨‍💻 Autor
-
-**Gabriel H. Finotti**
-
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
-
-## 🤝 Contribuindo
-
-Contribuições, issues e solicitações de features são bem-vindas!
-
-1. Faça um fork do projeto
-2. Crie sua branch de feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
-
----
-
-<p align="center">
-  Feito com ❤️ para a comunidade de fãs de PlayStation 2!
-</p>
+```typescript
+// Configuração dos Cron Jobs
+gameListUpdate: "0 0 1 */3 *"    // 1º dia de cada trimestre
+createGameListCache: "0 0 5 * *"  // 5º dia de cada mês
+```
